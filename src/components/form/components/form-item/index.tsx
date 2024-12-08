@@ -1,0 +1,21 @@
+import { cn } from "@/lib/utils";
+import { FC, forwardRef, useId } from "react";
+import { formItemContext } from "../../context/form-item-context";
+import { FormItemProps, FormItemRef } from "./types";
+
+export const FormItem = forwardRef<FormItemRef, FormItemProps>(
+  ({ className, ...props }, ref) => {
+    const id = useId();
+
+    return (
+      <formItemContext.Provider value={{ id }}>
+        <div
+          ref={ref}
+          className={cn("space-y-2", className)}
+          {...props}
+        />
+      </formItemContext.Provider>
+    );
+  },
+);
+(FormItem as FC).displayName = "FormItem";
