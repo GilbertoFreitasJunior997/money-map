@@ -17,7 +17,7 @@ export const SidebarItem = ({ route }: SidebarItemProps) => {
     <Link
       className={cn(
         "h-10 rounded-xl flex items-center transition-colors",
-        isSelected ? "bg-primary text-accent" : "hover:bg-muted",
+        isSelected ? "bg-primary text-primary-foreground font-semibold" : "hover:bg-muted",
       )}
       href={path}
       title={name}

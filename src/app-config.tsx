@@ -1,5 +1,5 @@
 import { DashboardIcon } from "@radix-ui/react-icons";
-import { Coins, HomeIcon } from "lucide-react";
+import { Coins, HandCoins, Wallet } from "lucide-react";
 import { Icon } from "./components/icon";
 import { Route } from "./lib/types";
 
@@ -26,14 +26,19 @@ export const appConfig = {
   ),
   routes: [
     {
-      name: "Home",
+      name: "Dashboard",
       path: "/",
-      icon: HomeIcon,
+      icon: DashboardIcon,
     },
     {
-      name: "Dashboard",
-      path: "/dashboard",
-      icon: DashboardIcon,
+      name: "Expenses",
+      path: "/expenses",
+      icon: HandCoins,
+    },
+    {
+      name: "Budgets",
+      path: "/budgets",
+      icon: Wallet,
     },
   ] satisfies Route[],
 };
