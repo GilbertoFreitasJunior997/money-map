@@ -1,4 +1,4 @@
-import { sessionsTable } from "@/db/schemas";
+import { sessionsTable } from "@/db/schemas/sessions.schema";
 import { Session, SessionInsert } from "@/models/session.model";
 import { sha256 } from "@oslojs/crypto/sha2";
 import {

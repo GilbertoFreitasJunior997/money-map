@@ -1,4 +1,4 @@
-import { sessionsTable } from "@/db/schemas";
+import { sessionsTable } from "@/db/schemas/sessions.schema";
 import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
 export type Session = InferSelectModel<typeof sessionsTable>;
