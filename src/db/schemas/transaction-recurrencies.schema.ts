@@ -2,7 +2,11 @@ import { integer, pgEnum, pgTable, serial } from "drizzle-orm/pg-core";
 import { transactionsTable } from "./transactions.schema";
 import { usersTable } from "./users.schema";
 
-const quantityTypeEnum = pgEnum("quantity_type_enum", ["day", "month", "year"]);
+export const quantityTypeEnum = pgEnum("quantity_type_enum", [
+  "day",
+  "month",
+  "year",
+]);
 
 export const transactionRecurrenciesTable = pgTable(
   "transaction_recurrencies",
