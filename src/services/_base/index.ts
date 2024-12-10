@@ -15,6 +15,11 @@ export const createService = <
 
       return newRecord as TModel;
     },
+    createMany: async (data: TInsert[]) => {
+      const newRecords = await db.insert(table).values(data).returning();
+
+      return newRecords as TModel[];
+    },
     get: async () => {
       const data = await db.select().from(table).execute();
 

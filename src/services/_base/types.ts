@@ -6,6 +6,7 @@ export type BaseService<
   TId extends number | string = number,
 > = {
   create: (data: TInsert) => Promise<TModel>;
+  createMany: (data: TInsert[]) => Promise<TModel[]>;
   get: () => Promise<TModel[]>;
   getById: (id: TId) => Promise<TModel>;
   getByColumn: <TColumn extends keyof TModel>(
