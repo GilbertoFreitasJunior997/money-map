@@ -9,7 +9,7 @@ import { createService } from "../_base";
 const baseService = createService<Account, AccountInsert>(accountsTable);
 export const accountService = {
   ...baseService,
-getTableData: async () => {
+  getTableData: async () => {
     const user = await getUser();
     if (!user) {
       return [];
@@ -23,6 +23,7 @@ getTableData: async () => {
         type: sql<string>`${accountTypesTable.description}`,
       })
       .from(accountsTable)
+      .where(eq(accountsTable.userId, user.id))
       .leftJoin(
         accountTypesTable,
         eq(accountsTable.accountTypeId, accountTypesTable.id),
