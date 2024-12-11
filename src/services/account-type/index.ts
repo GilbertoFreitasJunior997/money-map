@@ -1,5 +1,28 @@
+import { db } from "@/db";
 import { accountTypesTable } from "@/db/schemas/account-types.schema";
+import { getUser } from "@/lib/session";
 import { AccountType, AccountTypeInsert } from "@/models/account-type.model";
 import { createService } from "../_base";
 
-export const accountTypeService = createService<AccountType, AccountTypeInsert>(accountTypesTable);
+const baseService = createService<AccountType, AccountTypeInsert>(
+  accountTypesTable,
+);
+
+export const accountTypeService = {
+  ...baseService,
+  getSelectData: async () => {
+    const user = await getUser();
+    if (!user) {
+      return [];
+    }
+
+    const data = await db
+      .select({
+        id: accountTypesTable.id,
+        label: accountTypesTable.description,
+      })
+      .from(accountTypesTable);
+
+    return data;
+  },
+};

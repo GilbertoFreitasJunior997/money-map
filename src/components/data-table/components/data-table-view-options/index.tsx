@@ -15,7 +15,7 @@ export const DataTableViewOptions = <TData,>({
         <Button
           variant="outline"
           size="sm"
-          className="ml-auto h-8 flex"
+          className="h-8 flex"
         >
           <Icon
             src={MixerHorizontalIcon}

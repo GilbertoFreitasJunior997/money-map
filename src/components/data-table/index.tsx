@@ -21,6 +21,7 @@ import { DataTableProps } from "./types";
 
 export const DataTable = <TData, TValue>({
   columns,
+  toolbarItems,
   data,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -46,7 +47,10 @@ export const DataTable = <TData, TValue>({
 
   return (
     <div className="space-y-2">
-      <DataTableViewOptions table={table} />
+      <div className="flex items-center justify-between">
+        <div className="flex gap-2 items-center">{toolbarItems}</div>
+        <DataTableViewOptions table={table} />
+      </div>
 
       <div className="rounded-md border">
         <Table.Root>

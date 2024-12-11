@@ -4,11 +4,12 @@ import { UseActionMutationOptions } from "./types";
 
 export const useActionMutation = <TData, TVariables>({
   action,
+  onSuccess,
   throwOnUndefined = true,
 }: UseActionMutationOptions<TData, TVariables>) => {
   return useMutation({
     mutationFn: action,
-    onSettled: (data) => {
+    onSettled: async (data) => {
       if (!data) {
         if (!throwOnUndefined) {
           return;
@@ -22,6 +23,7 @@ export const useActionMutation = <TData, TVariables>({
         if (data.message) {
           toast.success(data.message);
         }
+        await onSuccess?.(data.data);
 
         return;
       }
