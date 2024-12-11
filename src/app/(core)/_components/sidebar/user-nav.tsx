@@ -4,7 +4,7 @@ import { Sheet } from "@/components/sheet";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { getUser } from "@/lib/session";
 import { UserCircle2 } from "lucide-react";
-import { ProfileDrawer } from "../profile-drawer";
+import { ProfileSheet } from "../profile-drawer";
 import { SignOffDropdownItem } from "./sign-off-dropdown-item";
 
 export const UserNav = async () => {
@@ -60,7 +60,7 @@ export const UserNav = async () => {
         </DropdownMenu.Content>
       </DropdownMenu.Root>
 
-      <ProfileDrawer user={user} />
+      <ProfileSheet user={user} />
     </Sheet.Root>
   );
 };
