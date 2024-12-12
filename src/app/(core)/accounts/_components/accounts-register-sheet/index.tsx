@@ -19,6 +19,7 @@ export const AccountsRegisterSheet = ({
     >
       <Sheet.Content>
         <Sheet.Title>Create Account</Sheet.Title>
+
         <AccountsForm onClose={handleClose} />
       </Sheet.Content>
     </Sheet.Root>
