@@ -37,7 +37,7 @@ export const DataTableDeleteDialog = <TData,>({
           </Dialog.Close>
           <Button
             variant="destructive"
-            disabled={isPending}
+            isLoading={isPending}
             onClick={() => {
               if (!data) {
                 return;
