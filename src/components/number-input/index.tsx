@@ -10,7 +10,7 @@ const NumberInputBase = <TForm extends FieldValues>(
   {
     className,
     value,
-    fractionDigits,
+    fractionDigits = { min: 2, max: 2 },
     form,
     name,
     description,
@@ -27,7 +27,11 @@ const NumberInputBase = <TForm extends FieldValues>(
     label={label}
   >
     {({ field }) => {
-      const { min, max } = fractionDigits ?? {};
+      const { min, max } = fractionDigits;
+
+      if (!max) {
+        return;
+      }
 
       const formatter = new Intl.NumberFormat("en-US", {
         minimumFractionDigits: min,
@@ -35,13 +39,15 @@ const NumberInputBase = <TForm extends FieldValues>(
       });
 
       const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
+        const input = e.target;
+
+        const { value } = input;
 
         let newValue: number | undefined = undefined;
 
         try {
-          newValue = Number.parseFloat(value.replaceAll(",", ""));
-          newValue = Number.isNaN(newValue) ? undefined : newValue;
+          newValue = Number.parseFloat(value.replace(/\D/g, ""));
+          newValue = Number.isNaN(newValue) ? undefined : newValue / 10 ** max;
         } finally {
           onChange?.(newValue);
           field?.onChange(newValue);
