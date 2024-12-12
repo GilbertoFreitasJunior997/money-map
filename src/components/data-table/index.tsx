@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -12,21 +13,56 @@ import {
 } from "@tanstack/react-table";
 
 import { Table } from "@/components/data-table/components/table";
-import { useState } from "react";
+import { uppercaseFirstLetter } from "@/lib/utils";
+import { useMemo, useState } from "react";
 import { DataTableBody } from "./components/data-table-body";
 import { DataTableHeader } from "./components/data-table-header";
 import { DataTablePagination } from "./components/data-table-pagination";
-import { DataTableViewOptions } from "./components/data-table-view-options";
+import { DataTableRowActions } from "./components/data-table-row-actions";
+import { DATA_TABLE_ROW_ACTIONS_COLUMN_ID } from "./components/data-table-row-actions/consts";
+import { DataTableToolbar } from "./components/data-table-toolbar";
 import { DataTableProps } from "./types";
 
 export const DataTable = <TData, TValue>({
-  columns,
-  toolbarItems,
   data,
-}: DataTableProps<TData, TValue>) => {
+  columns: baseColumns,
+  entityName,
+  edit,
+  create,
+  remove,
+}: DataTableProps<TData>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  const columns = useMemo(() => {
+    const columns: ColumnDef<TData, TValue>[] = [];
+
+    for (const column of baseColumns) {
+      const header = column.label ?? uppercaseFirstLetter(String(column.key));
+
+      columns.push({
+        header,
+        accessorKey: column.key,
+      });
+    }
+
+    if (edit || remove) {
+      columns.push({
+        id: DATA_TABLE_ROW_ACTIONS_COLUMN_ID,
+        cell: ({ row }) => (
+          <DataTableRowActions
+            entityName={entityName}
+            edit={edit}
+            remove={remove}
+            data={row.original}
+          />
+        ),
+      });
+    }
+
+    return columns;
+  }, [baseColumns, edit, remove, entityName]);
 
   const table = useReactTable({
     data,
@@ -46,21 +82,24 @@ export const DataTable = <TData, TValue>({
   });
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between">
-        <div className="flex gap-2 items-center">{toolbarItems}</div>
-        <DataTableViewOptions table={table} />
-      </div>
+    <div className="flex flex-col grow justify-between h-full gap-2">
+      <div className="flex flex-col gap-2 grow">
+        <DataTableToolbar
+          table={table}
+          create={create}
+          entityName={entityName}
+        />
 
-      <div className="rounded-md border">
-        <Table.Root>
-          <DataTableHeader table={table} />
+        <div className="rounded-md border grow">
+          <Table.Root>
+            <DataTableHeader table={table} />
 
-          <DataTableBody
-            table={table}
-            columns={columns}
-          />
-        </Table.Root>
+            <DataTableBody
+              table={table}
+              columns={columns}
+            />
+          </Table.Root>
+        </div>
       </div>
 
       <div className="p-2 rounded-md border">

@@ -1,4 +1,5 @@
 import { flexRender } from "@tanstack/react-table";
+import { dataTableNotFilterableColumns } from "../../consts";
 import { DataTableFilter } from "../data-table-filter";
 import { Table } from "../table";
 import { DataTableHeaderProps } from "./types";
@@ -14,6 +15,10 @@ export const DataTableHeader = <TData,>({
           className="hover:bg-inherit"
         >
           {headerGroup.headers.map((header) => {
+            const column = table.getColumn(header.id);
+            const hasFilter =
+              column?.id && !dataTableNotFilterableColumns.includes(column?.id);
+
             return (
               <Table.Head
                 key={header.id}
@@ -26,10 +31,12 @@ export const DataTableHeader = <TData,>({
                       header.getContext(),
                     )}
 
-                <DataTableFilter
-                  table={table}
-                  column={header.id}
-                />
+                {hasFilter && (
+                  <DataTableFilter
+                    table={table}
+                    column={header.id}
+                  />
+                )}
               </Table.Head>
             );
           })}

@@ -11,7 +11,7 @@ import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-import { createAccount, getAccountSelectData } from "./actions";
+import { createAccount, getAccountSelectData } from "../../actions";
 import { ACCOUNTS_FORM_ID } from "./consts";
 import { AccountsFormProps } from "./types";
 
