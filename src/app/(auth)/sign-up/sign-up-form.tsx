@@ -8,12 +8,11 @@ import { useZodForm } from "@/lib/hooks/use-zod-form";
 import { z } from "zod";
 import { signUp } from "./actions";
 
-const signUpFormSchema = z
-  .object({
-    email: z.string().email(),
-    name: z.string().min(2),
-    password: z.string().min(6)
-  })
+const signUpFormSchema = z.object({
+  email: z.string().email(),
+  name: z.string().min(2),
+  password: z.string().min(6),
+});
 
 export type SignUpFormData = z.infer<typeof signUpFormSchema>;
 
@@ -49,7 +48,7 @@ export const SignUpForm = () => {
         <Button
           type="submit"
           className="w-full"
-          disabled={isPending}
+          isLoading={isPending}
         >
           Sign up
         </Button>

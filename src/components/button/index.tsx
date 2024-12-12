@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
 import { Slot } from "@radix-ui/react-slot";
+import { Loader2 } from "lucide-react";
 import { forwardRef } from "react";
 import { buttonVariants } from "./consts";
 import { ButtonProps, ButtonRef } from "./types";
-import { Loader2 } from "lucide-react";
 
 export const Button = forwardRef<ButtonRef, ButtonProps>(
   (
