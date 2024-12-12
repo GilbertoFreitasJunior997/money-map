@@ -21,6 +21,7 @@ export const AccountsRegisterSheet = () => {
       </Sheet.Trigger>
       <Sheet.Content>
         <Sheet.Title>Create Account</Sheet.Title>
+
         <AccountsForm onClose={handleClose} />
       </Sheet.Content>
     </Sheet.Root>

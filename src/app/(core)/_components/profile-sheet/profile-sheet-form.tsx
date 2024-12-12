@@ -10,7 +10,7 @@ import { UserAuth } from "@/models/user.model";
 import Link from "next/link";
 import { z } from "zod";
 import { updateProfile } from "./actions";
-import { PROFILE_DRAWER_FORM_ID } from "./consts";
+import { PROFILE_SHEET_FORM_ID } from "./consts";
 
 const formSchema = z.object({
   name: z.string(),
@@ -18,7 +18,7 @@ const formSchema = z.object({
 });
 export type ProfileFormData = z.infer<typeof formSchema>;
 
-export const ProfileDrawerForm = ({ user }: { user: UserAuth }) => {
+export const ProfileSheetForm = ({ user }: { user: UserAuth }) => {
   const form = useZodForm({
     schema: formSchema,
     defaultValues: {
@@ -41,7 +41,7 @@ export const ProfileDrawerForm = ({ user }: { user: UserAuth }) => {
         <Form
           form={form}
           onSubmit={handleFormSubmit}
-          id={PROFILE_DRAWER_FORM_ID}
+          id={PROFILE_SHEET_FORM_ID}
         >
           <Input
             form={form}
@@ -76,8 +76,8 @@ export const ProfileDrawerForm = ({ user }: { user: UserAuth }) => {
         </Sheet.Close>
 
         <Button
-          disabled={isPending}
-          form={PROFILE_DRAWER_FORM_ID}
+          isLoading={isPending}
+          form={PROFILE_SHEET_FORM_ID}
         >
           Save
         </Button>
