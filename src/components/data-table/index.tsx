@@ -20,6 +20,7 @@ import { DataTableHeader } from "./components/data-table-header";
 import { DataTablePagination } from "./components/data-table-pagination";
 import { DataTableRowActions } from "./components/data-table-row-actions";
 import { DATA_TABLE_ROW_ACTIONS_COLUMN_ID } from "./components/data-table-row-actions/consts";
+import { dataTableSelectColumn } from "./components/data-table-select-column";
 import { DataTableToolbar } from "./components/data-table-toolbar";
 import { DataTableProps } from "./types";
 
@@ -34,9 +35,12 @@ export const DataTable = <TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
   const columns = useMemo(() => {
-    const columns: ColumnDef<TData, TValue>[] = [];
+    const columns: ColumnDef<TData, TValue>[] = [
+      dataTableSelectColumn as ColumnDef<TData, TValue>,
+    ];
 
     for (const column of baseColumns) {
       const header = column.label ?? uppercaseFirstLetter(String(column.key));
@@ -58,6 +62,10 @@ export const DataTable = <TData, TValue>({
             data={row.original}
           />
         ),
+        enableGlobalFilter: false,
+        enableColumnFilter: false,
+        enableSorting: false,
+        enableHiding: false,
       });
     }
 
@@ -74,10 +82,12 @@ export const DataTable = <TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
+      rowSelection,
     },
   });
 

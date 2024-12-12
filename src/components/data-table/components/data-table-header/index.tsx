@@ -1,5 +1,4 @@
 import { flexRender } from "@tanstack/react-table";
-import { dataTableNotFilterableColumns } from "../../consts";
 import { DataTableFilter } from "../data-table-filter";
 import { Table } from "../table";
 import { DataTableHeaderProps } from "./types";
@@ -16,8 +15,7 @@ export const DataTableHeader = <TData,>({
         >
           {headerGroup.headers.map((header) => {
             const column = table.getColumn(header.id);
-            const hasFilter =
-              column?.id && !dataTableNotFilterableColumns.includes(column?.id);
+            const hasFilter = column?.id && !!column.getCanFilter();
 
             return (
               <Table.Head
