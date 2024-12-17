@@ -1,8 +1,8 @@
 import { Sheet } from "@/components/sheet";
 import { UserAuth } from "@/models/user.model";
-import { ProfileDrawerForm } from "./profile-drawer-form";
+import { ProfileSheetForm } from "./profile-sheet-form";
 
-export const ProfileDrawer = async ({ user }: { user: UserAuth }) => {
+export const ProfileSheet = async ({ user }: { user: UserAuth }) => {
   return (
     <Sheet.Content>
       <Sheet.Header>
@@ -12,7 +12,7 @@ export const ProfileDrawer = async ({ user }: { user: UserAuth }) => {
         </Sheet.Description>
       </Sheet.Header>
 
-      <ProfileDrawerForm user={user} />
+      <ProfileSheetForm user={user} />
     </Sheet.Content>
   );
 };

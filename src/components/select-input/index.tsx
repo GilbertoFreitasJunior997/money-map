@@ -2,6 +2,7 @@ import { FieldValues } from "react-hook-form";
 import { FormInputBase } from "../form/components/form-input-base";
 import { Select } from "../select";
 import { SelectBaseItem, SelectInputProps } from "./types";
+import { Loader2 } from "lucide-react";
 
 export const SelectInput = <
   TItem extends SelectBaseItem,
@@ -12,6 +13,7 @@ export const SelectInput = <
   onChange,
   placeholder,
   className,
+  isLoading = false,
   ...formProps
 }: SelectInputProps<TItem, TForm>) => (
   <FormInputBase {...formProps}>
@@ -26,6 +28,21 @@ export const SelectInput = <
         field?.onChange(newValue);
       };
 
+      const content = isLoading ? (
+        <div className="h-12 grid place-content-center">
+          <Loader2 className="size-4 animate-spin" />
+        </div>
+      ) : (
+        items.map((item) => (
+          <Select.Item
+            key={item.id}
+            value={String(item.id)}
+          >
+            {item.label}
+          </Select.Item>
+        ))
+      );
+
       return (
         <Select.Root
           value={selectedValue}
@@ -34,16 +51,7 @@ export const SelectInput = <
           <Select.Trigger className={className}>
             <Select.Value placeholder={placeholder} />
           </Select.Trigger>
-          <Select.Content>
-            {items.map((item) => (
-              <Select.Item
-                key={item.id}
-                value={String(item.id)}
-              >
-                {item.label}
-              </Select.Item>
-            ))}
-          </Select.Content>
+          <Select.Content>{content}</Select.Content>
         </Select.Root>
       );
     }}

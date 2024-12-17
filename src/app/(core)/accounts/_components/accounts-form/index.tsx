@@ -11,7 +11,7 @@ import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-import { createAccount, getAccountSelectData } from "./actions";
+import { createAccount, getAccountSelectData } from "../../actions";
 import { ACCOUNTS_FORM_ID } from "./consts";
 import { AccountsFormProps } from "./types";
 
@@ -33,10 +33,9 @@ export const AccountsForm = ({ onClose }: AccountsFormProps) => {
     },
   });
 
-  const { data: accountTypes } = useQuery({
+  const { data: accountTypes, isLoading } = useQuery({
     queryKey: ["accountTypes", "select"],
     queryFn: getAccountSelectData,
-    initialData: [],
   });
 
   return (
@@ -58,7 +57,8 @@ export const AccountsForm = ({ onClose }: AccountsFormProps) => {
           <SelectInput
             name="accountType"
             form={form}
-            items={accountTypes}
+            items={accountTypes || []}
+            isLoading={isLoading}
           />
         </Form>
       </Sheet.Body>
@@ -72,7 +72,7 @@ export const AccountsForm = ({ onClose }: AccountsFormProps) => {
           </Button>
         </Sheet.Close>
         <Button
-          disabled={isPending}
+          isLoading={isPending}
           form={ACCOUNTS_FORM_ID}
         >
           Create Account

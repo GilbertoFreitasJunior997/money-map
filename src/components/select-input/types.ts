@@ -15,4 +15,5 @@ export type SelectInputProps<
   onChange?: (value?: TItem) => void;
   className?: string;
   placeholder?: ReactNode;
+  isLoading?: boolean;
 };

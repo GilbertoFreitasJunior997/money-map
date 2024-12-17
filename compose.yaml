@@ -1,9 +1,0 @@
-services:
-  database:
-    image: postgres
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: db
-    ports:
-      - 5432:5432

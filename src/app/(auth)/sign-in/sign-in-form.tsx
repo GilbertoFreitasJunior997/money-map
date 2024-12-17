@@ -42,7 +42,7 @@ export const SignInForm = () => {
         <Button
           type="submit"
           className="w-full"
-          disabled={isPending}
+          isLoading={isPending}
         >
           Sign in
         </Button>
