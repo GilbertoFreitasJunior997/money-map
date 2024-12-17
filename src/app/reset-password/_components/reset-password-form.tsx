@@ -41,7 +41,7 @@ export const ResetPasswordForm = () => {
       <Separator />
 
       <Button
-        disabled={isPending}
+        isLoading={isPending}
         className="w-full"
       >
         Save new password

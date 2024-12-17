@@ -14,6 +14,9 @@ export const DataTableHeader = <TData,>({
           className="hover:bg-inherit"
         >
           {headerGroup.headers.map((header) => {
+            const column = table.getColumn(header.id);
+            const hasFilter = column?.id && !!column.getCanFilter();
+
             return (
               <Table.Head
                 key={header.id}
@@ -26,10 +29,12 @@ export const DataTableHeader = <TData,>({
                       header.getContext(),
                     )}
 
-                <DataTableFilter
-                  table={table}
-                  column={header.id}
-                />
+                {hasFilter && (
+                  <DataTableFilter
+                    table={table}
+                    column={header.id}
+                  />
+                )}
               </Table.Head>
             );
           })}

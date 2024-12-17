@@ -4,6 +4,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 import { cn } from "@/lib/utils";
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
 import {
   DialogContentProps,
   DialogContentRef,
@@ -14,7 +15,6 @@ import {
   DialogTitleProps,
   DialogTitleRef,
 } from "./types";
-import { forwardRef, ElementRef, ComponentPropsWithoutRef } from "react";
 
 const Root = DialogPrimitive.Root;
 
@@ -111,8 +111,6 @@ Description.displayName = DialogPrimitive.Description.displayName;
 
 export const Dialog = {
   Root,
-  Portal,
-  Overlay,
   Trigger,
   Close,
   Content,

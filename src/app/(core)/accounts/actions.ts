@@ -3,11 +3,11 @@
 import { AuthUserNotAuthenticatedError } from "@/app/(auth)/_lib/errors";
 import { getUser } from "@/lib/session";
 import { ActionResult } from "@/lib/types";
-import { Account } from "@/models/account.model";
+import { Account, AccountTableData } from "@/models/account.model";
 import { accountService } from "@/services/account";
 import { accountTypeService } from "@/services/account-type";
 import { revalidatePath } from "next/cache";
-import { AccountsFormSchemaData } from ".";
+import { AccountsFormSchemaData } from "./_components/accounts-form";
 
 export const getAccountSelectData = async () => {
   return await accountTypeService.getSelectData();
@@ -39,6 +39,25 @@ export const createAccount = async (
     return {
       success: false,
       error,
+    };
+  }
+};
+
+export const removeAccount = async ({
+  id,
+}: AccountTableData): Promise<ActionResult> => {
+  try {
+    await accountService.delete(id);
+
+    revalidatePath("/accounts");
+    return {
+      success: true,
+      data: undefined,
+    };
+  } catch (e) {
+    return {
+      success: false,
+      error: e,
     };
   }
 };

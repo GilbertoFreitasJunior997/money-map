@@ -3,6 +3,8 @@ import { LucideIcon } from "lucide-react";
 
 export type OmitMerge<T, K extends object> = Omit<T, keyof K> & K;
 
+export type SetState<T> = (value: T | ((oldValue: T) => T)) => void;
+
 export type ActionSuccessResult<T> = {
   success: true;
   data: T;

@@ -25,7 +25,7 @@ export const DataTableBody = <TData, TValue>({
         <Table.Row>
           <Table.Cell
             colSpan={columns.length}
-            className="h-24 text-center"
+            className="text-center"
           >
             No results.
           </Table.Cell>
