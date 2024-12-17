@@ -5,6 +5,7 @@ import { FieldValues } from "react-hook-form";
 import { FormInputBase } from "../form/components/form-input-base";
 import { Input } from "../input";
 import { NumberInputProps, NumberInputRef } from "./types";
+import { formatter } from "./consts";
 
 const NumberInputBase = <TForm extends FieldValues>(
   {
@@ -27,16 +28,11 @@ const NumberInputBase = <TForm extends FieldValues>(
     label={label}
   >
     {({ field }) => {
-      const { min, max } = fractionDigits;
+      const { max } = fractionDigits;
 
       if (!max) {
         return;
       }
-
-      const formatter = new Intl.NumberFormat("en-US", {
-        minimumFractionDigits: min,
-        maximumFractionDigits: max,
-      });
 
       const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const input = e.target;
