@@ -58,7 +58,8 @@
 				"noEmptyInterface": "error",
 				"noExplicitAny": "error",
 				"noRedundantUseStrict": "error",
-				"noShadowRestrictedNames": "error"
+				"noShadowRestrictedNames": "error",
+				"noArrayIndexKey": "off"
 			}
 		}
 	},

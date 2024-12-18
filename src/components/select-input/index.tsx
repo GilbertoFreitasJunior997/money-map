@@ -1,8 +1,9 @@
+import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import { FieldValues } from "react-hook-form";
 import { FormInputBase } from "../form/components/form-input-base";
 import { Select } from "../select";
 import { SelectBaseItem, SelectInputProps } from "./types";
-import { Loader2 } from "lucide-react";
 
 export const SelectInput = <
   TItem extends SelectBaseItem,
@@ -14,6 +15,7 @@ export const SelectInput = <
   placeholder,
   className,
   isLoading = false,
+  buttons,
   ...formProps
 }: SelectInputProps<TItem, TForm>) => (
   <FormInputBase {...formProps}>
@@ -28,21 +30,6 @@ export const SelectInput = <
         field?.onChange(newValue);
       };
 
-      const content = isLoading ? (
-        <div className="h-12 grid place-content-center">
-          <Loader2 className="size-4 animate-spin" />
-        </div>
-      ) : (
-        items.map((item) => (
-          <Select.Item
-            key={item.id}
-            value={String(item.id)}
-          >
-            {item.label}
-          </Select.Item>
-        ))
-      );
-
       return (
         <Select.Root
           value={selectedValue}
@@ -51,7 +38,25 @@ export const SelectInput = <
           <Select.Trigger className={className}>
             <Select.Value placeholder={placeholder} />
           </Select.Trigger>
-          <Select.Content>{content}</Select.Content>
+          <Select.Content>
+            {isLoading && (
+              <div className="h-12 grid place-content-center">
+                <Loader2 className="size-4 animate-spin" />
+              </div>
+            )}
+
+            <div className={cn(isLoading && "hidden")}>
+              {items.map((item) => (
+                <Select.Item
+                  key={item.id}
+                  value={String(item.id)}
+                  buttons={buttons}
+                >
+                  {item.label}
+                </Select.Item>
+              ))}
+            </div>
+          </Select.Content>
         </Select.Root>
       );
     }}

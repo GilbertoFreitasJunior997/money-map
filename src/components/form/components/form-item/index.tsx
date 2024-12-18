@@ -11,7 +11,10 @@ export const FormItem = forwardRef<FormItemRef, FormItemProps>(
       <formItemContext.Provider value={{ id }}>
         <div
           ref={ref}
-          className={cn("space-y-2", className)}
+          className={cn(
+            "space-y-2 p-px grow w-full overflow-hidden",
+            className,
+          )}
           {...props}
         />
       </formItemContext.Provider>

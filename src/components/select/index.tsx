@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
   CaretSortIcon,
   CheckIcon,
@@ -7,8 +8,9 @@ import {
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
+import { Button } from "../button";
+import { Icon } from "../icon";
 import {
   SelectContentProps,
   SelectContentRef,
@@ -128,22 +130,39 @@ const Label = forwardRef<SelectLabelRef, SelectLabelProps>(
 Label.displayName = SelectPrimitive.Label.displayName;
 
 const Item = forwardRef<SelectItemRef, SelectItemProps>(
-  ({ className, children, ...props }, ref) => (
-    <SelectPrimitive.Item
-      ref={ref}
-      className={cn(
-        "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        className,
-      )}
-      {...props}
-    >
-      <span className="absolute right-2 flex items-center justify-center">
-        <SelectPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
-        </SelectPrimitive.ItemIndicator>
-      </span>
-      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-    </SelectPrimitive.Item>
+  ({ className, buttons, children, ...props }, ref) => (
+    <div className="flex items-center gap-1 rounded-sm focus:bg-accent hover:bg-accent focus:text-accent-foreground px-2">
+      <SelectPrimitive.Item
+        ref={ref}
+        className={cn(
+          "relative flex w-full cursor-default select-none items-center py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 grow",
+          className,
+        )}
+        {...props}
+      >
+        <span className="absolute right-2 flex items-center justify-center">
+          <SelectPrimitive.ItemIndicator>
+            <CheckIcon className="size-4" />
+          </SelectPrimitive.ItemIndicator>
+        </span>
+        <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+      </SelectPrimitive.Item>
+
+      {buttons?.map((button, index) => (
+        <Button
+          className="p-1 w-5 h-5 rounded-full"
+          variant="secondary"
+          key={index}
+          {...button}
+          onClick={() => button.onClick(props.value)}
+        >
+          <Icon
+            className="w-5"
+            {...button.icon}
+          />
+        </Button>
+      ))}
+    </div>
   ),
 );
 Item.displayName = SelectPrimitive.Item.displayName;

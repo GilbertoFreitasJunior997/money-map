@@ -1,0 +1,1 @@
+export const ACCOUNT_TYPES_FORM_ID = "account_types_form__id"

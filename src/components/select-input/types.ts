@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { FieldValues } from "react-hook-form";
 import { z } from "zod";
 import { InputDefaultProps } from "../form/types";
+import { SelectItemButton } from "../select/types";
 import { selectBaseItemSchema } from "./consts";
 
 export type SelectBaseItem = z.infer<typeof selectBaseItemSchema>;
@@ -16,4 +17,5 @@ export type SelectInputProps<
   className?: string;
   placeholder?: ReactNode;
   isLoading?: boolean;
+  buttons?: SelectItemButton[];
 };
