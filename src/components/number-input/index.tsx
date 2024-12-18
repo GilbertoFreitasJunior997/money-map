@@ -5,7 +5,7 @@ import { FieldValues } from "react-hook-form";
 import { FormInputBase } from "../form/components/form-input-base";
 import { Input } from "../input";
 import { NumberInputProps, NumberInputRef } from "./types";
-import { formatter } from "./consts";
+import { formatter } from "@/lib/formatter";
 
 const NumberInputBase = <TForm extends FieldValues>(
   {

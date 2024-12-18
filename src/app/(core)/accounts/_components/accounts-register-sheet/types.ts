@@ -1,6 +1,6 @@
-import { SetState } from "@/lib/types";
+import { ReactNode } from "react";
 
 export type AccountsRegisterSheetProps = {
-  isOpen: boolean;
-  setIsOpen: SetState<boolean>;
+  trigger?: ReactNode;
+  id?: number;
 };

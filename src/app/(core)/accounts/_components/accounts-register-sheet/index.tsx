@@ -5,22 +5,19 @@ import { AccountsForm } from "../accounts-form";
 import { AccountsRegisterSheetProps } from "./types";
 
 export const AccountsRegisterSheet = ({
-  isOpen,
-  setIsOpen,
+  trigger,
+  id,
 }: AccountsRegisterSheetProps) => {
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
   return (
-    <Sheet.Root
-      open={isOpen}
-      onOpenChange={setIsOpen}
-    >
+    <Sheet.Root>
+      <Sheet.Trigger asChild>{trigger}</Sheet.Trigger>
       <Sheet.Content>
         <Sheet.Title>Create Account</Sheet.Title>
 
-        <AccountsForm onClose={handleClose} />
+        <AccountsForm
+          id={id}
+          onClose={() => {}}
+        />
       </Sheet.Content>
     </Sheet.Root>
   );
