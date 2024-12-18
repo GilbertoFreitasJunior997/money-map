@@ -5,12 +5,13 @@ import { FieldValues } from "react-hook-form";
 import { FormInputBase } from "../form/components/form-input-base";
 import { Input } from "../input";
 import { NumberInputProps, NumberInputRef } from "./types";
+import { formatter } from "./consts";
 
 const NumberInputBase = <TForm extends FieldValues>(
   {
     className,
     value,
-    fractionDigits,
+    fractionDigits = { min: 2, max: 2 },
     form,
     name,
     description,
@@ -27,21 +28,22 @@ const NumberInputBase = <TForm extends FieldValues>(
     label={label}
   >
     {({ field }) => {
-      const { min, max } = fractionDigits ?? {};
+      const { max } = fractionDigits;
 
-      const formatter = new Intl.NumberFormat("en-US", {
-        minimumFractionDigits: min,
-        maximumFractionDigits: max,
-      });
+      if (!max) {
+        return;
+      }
 
       const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
+        const input = e.target;
+
+        const { value } = input;
 
         let newValue: number | undefined = undefined;
 
         try {
-          newValue = Number.parseFloat(value.replaceAll(",", ""));
-          newValue = Number.isNaN(newValue) ? undefined : newValue;
+          newValue = Number.parseFloat(value.replace(/\D/g, ""));
+          newValue = Number.isNaN(newValue) ? undefined : newValue / 10 ** max;
         } finally {
           onChange?.(newValue);
           field?.onChange(newValue);
