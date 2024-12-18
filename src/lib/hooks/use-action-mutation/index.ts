@@ -5,7 +5,7 @@ import { UseActionMutationOptions } from "./types";
 export const useActionMutation = <TData, TVariables>({
   action,
   onSuccess,
-  throwOnUndefined = true,
+  throwOnUndefined = false,
 }: UseActionMutationOptions<TData, TVariables>) => {
   return useMutation({
     mutationFn: action,

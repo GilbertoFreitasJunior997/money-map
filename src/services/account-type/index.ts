@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { accountTypesTable } from "@/db/schemas/account-types.schema";
+import { accountsTable } from "@/db/schemas/accounts.schema";
 import { getUser } from "@/lib/session";
 import { AccountType, AccountTypeInsert } from "@/models/account-type.model";
 import { eq } from "drizzle-orm";
@@ -26,5 +27,16 @@ export const accountTypeService = {
       .where(eq(accountTypesTable.userId, user.id));
 
     return data;
+  },
+  getHasConnectedAccount: async (id: number) => {
+    const data = await db
+      .select({
+        id: accountsTable.id,
+      })
+      .from(accountsTable)
+      .where(eq(accountsTable.accountTypeId, id))
+      .limit(1);
+
+    return !!data.length;
   },
 };
