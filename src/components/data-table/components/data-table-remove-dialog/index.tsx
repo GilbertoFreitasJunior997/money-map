@@ -13,9 +13,7 @@ export const DataTableDeleteDialog = <TData,>({
 }: DataTableDeleteDialogProps<TData>) => {
   const { mutate, isPending } = useActionMutation({
     action: remove.action,
-    onSuccess: async () => {
-      setData(undefined);
-    },
+    onSuccess: () => setData(undefined),
   });
 
   return (

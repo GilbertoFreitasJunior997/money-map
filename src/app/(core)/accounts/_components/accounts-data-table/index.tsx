@@ -4,7 +4,7 @@ import { DataTable } from "@/components/data-table";
 import { useState } from "react";
 import { toast } from "sonner";
 import { removeAccount } from "../../actions";
-import { AccountsRegisterSheet } from "../accounts-register-sheet";
+import { AccountsSheet } from "../accounts-sheet";
 import { accountsDataTableColumns } from "./consts";
 import { AccountsDataTableProps } from "./types";
 
@@ -30,7 +30,7 @@ export const AccountsDataTable = ({ data }: AccountsDataTableProps) => {
         columns={accountsDataTableColumns}
       />
 
-      <AccountsRegisterSheet
+      <AccountsSheet
         isOpen={isSheetOpen}
         setIsOpen={setIsSheetOpen}
       />

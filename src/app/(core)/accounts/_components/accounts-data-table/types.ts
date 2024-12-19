@@ -1,5 +1,5 @@
-import { AccountTableData } from "@/models/account.model";
+import { AccountListData } from "@/models/account.model";
 
 export type AccountsDataTableProps = {
-  data: AccountTableData[];
+  data: AccountListData[];
 };

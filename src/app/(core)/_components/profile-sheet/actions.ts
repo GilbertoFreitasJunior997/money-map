@@ -31,10 +31,10 @@ export const updateProfile = async ({
       data: undefined,
       message: "Profile updated",
     };
-  } catch (e) {
+  } catch (error) {
     return {
       success: false,
-      error: e,
+      error,
     };
   }
 };

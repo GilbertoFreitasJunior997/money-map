@@ -2,13 +2,13 @@ import { DropdownMenu } from "@/components/dropdown-menu";
 import { Icon } from "@/components/icon";
 import { Sheet } from "@/components/sheet";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { getUser } from "@/lib/session";
+import { checkUser } from "@/lib/session";
 import { UserCircle2 } from "lucide-react";
 import { ProfileSheet } from "../profile-sheet";
 import { SignOffDropdownItem } from "./sign-off-dropdown-item";
 
 export const UserNav = async () => {
-  const user = await getUser();
+  const user = await checkUser();
 
   if (!user) {
     return null;

@@ -9,8 +9,8 @@ export const useActionMutation = <TData, TVariables>({
 }: UseActionMutationOptions<TData, TVariables>) => {
   return useMutation({
     mutationFn: action,
-    onSettled: async (data) => {
-      if (!data) {
+    onSettled: async (result) => {
+      if (!result) {
         if (!throwOnUndefined) {
           return;
         }
@@ -19,21 +19,21 @@ export const useActionMutation = <TData, TVariables>({
         return;
       }
 
-      if (data.success) {
-        if (data.message) {
-          toast.success(data.message);
+      if (result.success) {
+        if (result.message) {
+          toast.success(result.message);
         }
-        await onSuccess?.(data.data);
+        await onSuccess?.(result.data);
 
         return;
       }
 
       let errorMessage = "";
 
-      if (data.error instanceof Error) {
-        errorMessage = data.error.message;
+      if (result.error instanceof Error) {
+        errorMessage = result.error.message;
       } else {
-        errorMessage = String(data.error);
+        errorMessage = String(result.error);
       }
       toast.error(errorMessage);
     },

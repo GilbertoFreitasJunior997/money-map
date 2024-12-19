@@ -1,13 +1,11 @@
-"use client";
-
 import { Sheet } from "@/components/sheet";
-import { AccountsForm } from "../accounts-form";
-import { AccountsRegisterSheetProps } from "./types";
+import { TransactionsForm } from "../transactions-form";
+import { TransactionSheetProps } from "./types";
 
-export const AccountsRegisterSheet = ({
+export const TransactionSheet = ({
   isOpen,
   setIsOpen,
-}: AccountsRegisterSheetProps) => {
+}: TransactionSheetProps) => {
   const handleClose = () => {
     setIsOpen(false);
   };
@@ -20,7 +18,7 @@ export const AccountsRegisterSheet = ({
       <Sheet.Content>
         <Sheet.Title>Create Account</Sheet.Title>
 
-        <AccountsForm onClose={handleClose} />
+        <TransactionsForm onClose={handleClose} />
       </Sheet.Content>
     </Sheet.Root>
   );

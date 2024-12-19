@@ -1,15 +1,14 @@
 import {
-  boolean,
+  date,
   decimal,
   integer,
   pgEnum,
   pgTable,
-  serial,
   text,
 } from "drizzle-orm/pg-core";
+import { createdAt, id, updatedAt, userId } from "./_utils";
 import { accountsTable } from "./accounts.schema";
 import { transactionCategoriesTable } from "./transaction-categories.schema";
-import { usersTable } from "./users.schema";
 
 export const transactionTypeEnum = pgEnum("transaction_type", [
   "expense",
@@ -18,21 +17,18 @@ export const transactionTypeEnum = pgEnum("transaction_type", [
 ]);
 
 export const transactionsTable = pgTable("transactions", {
-  id: serial().primaryKey(),
-  description: text().notNull(),
-  observation: text(),
+  id: id(),
+  description: text(),
+  notes: text(),
   amount: decimal().notNull(),
   type: transactionTypeEnum().notNull(),
-  isRecurring: boolean("is_recurring").notNull(),
+  date: date(),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
 
   accountId: integer("account_id").references(() => accountsTable.id),
   categoryId: integer("category_id").references(
     () => transactionCategoriesTable.id,
   ),
-  userId: integer("user_id")
-    .references(() => usersTable.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    })
-    .notNull(),
+  userId: userId(),
 });

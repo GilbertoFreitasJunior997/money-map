@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { DefaultValues, useForm } from "react-hook-form";
 import { ZodSchema, z } from "zod";
 import { UseZodFormOptions } from "./types";
 import { zodErrorMap } from "./zod-error-map";
@@ -12,6 +12,6 @@ export const useZodForm = <TSchema extends ZodSchema>({
 }: UseZodFormOptions<TSchema>) => {
   return useForm<z.infer<TSchema>>({
     resolver: zodResolver(schema),
-    defaultValues,
+    defaultValues: defaultValues as DefaultValues<TSchema>,
   });
 };

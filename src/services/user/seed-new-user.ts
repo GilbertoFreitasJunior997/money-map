@@ -1,51 +1,36 @@
-import { AccountTypeInsert } from "@/models/account-type.model";
+import { AccountInsert } from "@/models/account.model";
 import { TransactionCategoryInsert } from "@/models/transaction-category.model";
-import { accountTypeService } from "../account-type";
+import { accountService } from "../account";
 import { transactionCategoryService } from "../transaction-category";
 
-const accountTypes = [
-  "Credit Card",
-  "Debit Card",
-  "Cash",
-  "Cryptocurrency Wallet",
-];
+const accounts = ["Credit Card", "Debit Card", "Cash"];
 
 const transactionCategories = [
   "Housing",
-  "Utilities",
   "Groceries",
-  "Healthcare",
   "Transport",
-  "Entertainment",
-  "Dining Out",
   "Shopping",
-  "Travel",
   "Savings",
   "Investments",
   "Insurance",
-  "Debt Payment",
   "Education",
-  "Fitness",
   "Personal Care",
-  "Gifts",
   "Income",
   "Transfer",
   "Miscellaneous",
 ];
 
-export const seedNewUser = async (id: number) => {
-  const insertAccountTypes: AccountTypeInsert[] = accountTypes.map(
-    (description) => ({
-      description: description,
-      userId: id,
-    }),
-  );
-  await accountTypeService.createMany(insertAccountTypes);
-
+export const seedNewUser = async (userId: number) => {
   const insertTransactionCategories: TransactionCategoryInsert[] =
-    transactionCategories.map((description) => ({
-      description: description,
-      userId: id,
+    transactionCategories.map((name) => ({
+      name,
+      userId,
     }));
   await transactionCategoryService.createMany(insertTransactionCategories);
+
+  const insertAccounts: AccountInsert[] = accounts.map((name) => ({
+    name,
+    userId,
+  }));
+  await accountService.createMany(insertAccounts);
 };

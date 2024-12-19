@@ -1,15 +1,11 @@
-import { integer, pgTable, serial, text } from "drizzle-orm/pg-core";
-import { usersTable } from "./users.schema";
+import { pgTable, text } from "drizzle-orm/pg-core";
+import { createdAt, id, updatedAt, userId } from "./_utils";
 
 export const transactionCategoriesTable = pgTable("transaction_categories", {
-  id: serial().primaryKey(),
-  description: text().notNull(),
-  observation: text(),
-
-  userId: integer("user_id")
-    .references(() => usersTable.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    })
-    .notNull(),
+  id: id(),
+  name: text().notNull(),
+  note: text(),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+  userId: userId(),
 });
