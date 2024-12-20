@@ -17,6 +17,7 @@ import {
 } from "../../actions";
 import { TRANSACTIONS_FORM_ID, transactionsFormTypeItems } from "./consts";
 import { TransactionsFormProps } from "./types";
+import { TextAreaInput } from "@/components/textarea-input";
 
 const transactionsFormSchema = z.object({
   description: z.string(),
@@ -85,7 +86,7 @@ export const TransactionsForm = ({ onClose }: TransactionsFormProps) => {
             items={accounts ?? []}
             isLoading={isLoadingAccounts}
           />
-          <Input
+          <TextAreaInput
             name="notes"
             form={form}
           />
