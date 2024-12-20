@@ -39,9 +39,9 @@ export const createTransaction = async (
     const user = await checkUser();
 
     const type = transactionTypeEnum.enumValues.includes(
-      data.type.label as TransactionType,
+      data.type.label.toLocaleLowerCase() as TransactionType,
     )
-      ? (data.type.label as TransactionType)
+      ? (data.type.label.toLocaleLowerCase() as TransactionType)
       : transactionTypeEnum.enumValues[0];
 
     const newTransaction = await transactionService.create({
