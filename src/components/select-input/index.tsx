@@ -9,13 +9,12 @@ export const SelectInput = <
   TItem extends SelectBaseItem,
   TForm extends FieldValues,
 >({
-  items,
+  items: preItems,
   value,
   onChange,
   placeholder,
   className,
   isLoading = false,
-  buttons,
   ...formProps
 }: SelectInputProps<TItem, TForm>) => (
   <FormInputBase {...formProps}>
@@ -23,7 +22,16 @@ export const SelectInput = <
       const baseValue = formProps.form ? field?.value?.id : value?.id;
       const selectedValue = baseValue ? String(baseValue) : undefined;
 
+      const items =
+        formProps.form && field?.value && isLoading
+          ? [field.value as TItem]
+          : preItems;
+
       const handleChange = (value?: string) => {
+        if (value === "") {
+          return;
+        }
+
         const newValue = items.find((item) => String(item.id) === value);
 
         onChange?.(newValue);
@@ -50,7 +58,6 @@ export const SelectInput = <
                 <Select.Item
                   key={item.id}
                   value={String(item.id)}
-                  buttons={buttons}
                 >
                   {item.label}
                 </Select.Item>
