@@ -17,6 +17,7 @@ const TextAreaInputBase = <TForm extends FieldValues>(
     children: _,
     form,
     description,
+    isSkeleton,
     ...props
   }: TextAreaInputProps<TForm>,
   ref: ForwardedRef<TextAreaInputRef>,
@@ -26,6 +27,7 @@ const TextAreaInputBase = <TForm extends FieldValues>(
     form={form}
     description={description}
     label={label}
+    isSkeleton={isSkeleton}
   >
     {({ field }) => {
       const value = form ? (field?.value ?? "") : baseValue;
