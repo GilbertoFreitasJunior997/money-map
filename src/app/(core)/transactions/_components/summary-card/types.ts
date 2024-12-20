@@ -1,10 +1,9 @@
-import { IconProps } from "@/components/icon/types";
+import { TransactionListFilter } from "../transaction-list/types";
 
 export type SummaryCardProps = {
-  title: string;
   value: number;
-  icon: IconProps["src"];
+  type: TransactionListFilter;
+  isLoading: boolean;
   trend?: "up" | "down" | "neutral";
   trendValue?: string;
-  isLoading: boolean;
 };

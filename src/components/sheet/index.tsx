@@ -3,6 +3,7 @@ import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { forwardRef } from "react";
 import { Icon } from "../icon";
+import { Skeleton } from "../skeleton";
 import {
   SheetBodyProps,
   SheetContentProps,
@@ -22,7 +23,9 @@ const Trigger = SheetPrimitive.Trigger;
 const Close = SheetPrimitive.Close;
 
 const Body = ({ children }: SheetBodyProps) => (
-  <div className="py-4 px-1 grow overflow-x-hidden overflow-auto">{children}</div>
+  <div className="py-4 px-1 grow overflow-x-hidden overflow-auto">
+    {children}
+  </div>
 );
 
 const Content = forwardRef<SheetContentRef, SheetContentProps>(
@@ -38,7 +41,7 @@ const Content = forwardRef<SheetContentRef, SheetContentProps>(
       <SheetPrimitive.Content
         ref={ref}
         className={cn(
-          "fixed z-50 gap-4 bg-background p-6 shadow-lg right-0 w-3/4 m-3 rounded-lg flex flex-col",
+          "fixed z-50 gap-4 bg-background p-6 shadow-lg right-0 w-3/4 m-3 rounded-lg flex flex-col outline-none",
           "transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out inset-y-0 border data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
           className,
         )}
@@ -66,14 +69,21 @@ const Header = ({ className, ...props }: SheetHeaderProps) => (
 );
 Header.displayName = "SheetHeader";
 
-const Footer = ({ className, ...props }: SheetFooterProps) => (
+const Footer = ({
+  className,
+  isLoading,
+  children,
+  ...props
+}: SheetFooterProps) => (
   <div
     className={cn(
       "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
       className,
     )}
     {...props}
-  />
+  >
+    {isLoading ? <Skeleton className="w-full h-12" /> : children}
+  </div>
 );
 Footer.displayName = "SheetFooter";
 

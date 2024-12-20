@@ -5,6 +5,7 @@ import { UseActionQueryOptions } from "./types";
 export const useActionQuery = <TData>({
   action,
   queryKey,
+  enabled,
 }: UseActionQueryOptions<TData>) => {
   return useQuery({
     queryFn: async () => {
@@ -30,5 +31,6 @@ export const useActionQuery = <TData>({
       return;
     },
     queryKey,
+    enabled,
   });
 };

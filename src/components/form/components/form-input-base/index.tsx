@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/skeleton";
 import { uppercaseFirstLetter } from "@/lib/utils";
 import { FieldValues, Path } from "react-hook-form";
 import { FormControl } from "../form-control";
@@ -13,6 +14,7 @@ export const FormInputBase = <TForm extends FieldValues>({
   name,
   description,
   label,
+  isSkeleton,
   children,
 }: FormInputBaseProps<TForm>) => {
   if (!form) {
@@ -27,7 +29,11 @@ export const FormInputBase = <TForm extends FieldValues>({
         <FormItem>
           <FormLabel>{label ?? uppercaseFirstLetter(name as string)}</FormLabel>
 
-          <FormControl>{children(renderParams)}</FormControl>
+          {isSkeleton ? (
+            <Skeleton className="w-full h-8" />
+          ) : (
+            <FormControl>{children(renderParams)}</FormControl>
+          )}
 
           {!!description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

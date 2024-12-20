@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/button";
 import { Form } from "@/components/form";
 import { Input } from "@/components/input";
@@ -9,19 +10,24 @@ import { Sheet } from "@/components/sheet";
 import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useActionQuery } from "@/lib/hooks/use-action-query";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { z } from "zod";
 import {
   createTransaction,
+  getTransactionEditData,
   getTransactionFormAccounts,
   getTransactionFormTransactionCategories,
 } from "../../actions";
 import { TRANSACTIONS_FORM_ID, transactionsFormTypeItems } from "./consts";
 import { TransactionsFormProps } from "./types";
 import { DateInput } from "@/components/date-input";
+import { TextAreaInput } from "@/components/textarea-input";
+
 
 const transactionsFormSchema = z.object({
-  description: z.string(),
-  notes: z.string(),
+  description: z.string().nullable(),
+  notes: z.string().nullable(),
   amount: z.number(),
   type: selectBaseItemSchema,
   date: z.date(),
@@ -30,18 +36,49 @@ const transactionsFormSchema = z.object({
 });
 export type TransactionsFormSchemaData = z.infer<typeof transactionsFormSchema>;
 
-export const TransactionsForm = ({ onClose }: TransactionsFormProps) => {
+export const TransactionsForm = ({
+  editTransactionId,
+  onClose,
+}: TransactionsFormProps) => {
+  const queryClient = useQueryClient();
+
   const form = useZodForm({
     schema: transactionsFormSchema,
-    defaultValues: {
-      type: transactionsFormTypeItems[0],
-    },
+    defaultValues: editTransactionId
+      ? undefined
+      : {
+          type: transactionsFormTypeItems[0],
+        },
   });
+
+  const handleClose = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["transactions"],
+      exact: false,
+    });
+
+    onClose();
+  };
 
   const { mutate, isPending } = useActionMutation({
     action: createTransaction,
-    onSuccess: onClose,
+    onSuccess: handleClose,
   });
+
+  const { data: editTransaction, isFetching: isFetchingEditTransaction } =
+    useActionQuery({
+      action: () => getTransactionEditData(editTransactionId as number),
+      queryKey: ["transactions", editTransactionId ?? ""],
+      enabled: !!editTransactionId,
+    });
+
+  useEffect(() => {
+    if (!editTransaction || !editTransactionId) {
+      return;
+    }
+
+    form.reset(editTransaction);
+  }, [form, editTransaction, editTransactionId]);
 
   const { data: categories, isLoading: isLoadingCategories } = useActionQuery({
     action: getTransactionFormTransactionCategories,
@@ -64,31 +101,39 @@ export const TransactionsForm = ({ onClose }: TransactionsFormProps) => {
           <SelectInput
             name="type"
             form={form}
+            isSkeleton={isFetchingEditTransaction}
             items={transactionsFormTypeItems}
           />
           <NumberInput
             name="amount"
             form={form}
+            isSkeleton={isFetchingEditTransaction}
+            isCurrency={true}
+            min={0.01}
           />
           <Input
             name="description"
             form={form}
+            isSkeleton={isFetchingEditTransaction}
           />
           <SelectInput
             name="category"
             form={form}
+            isSkeleton={isFetchingEditTransaction}
             items={categories ?? []}
             isLoading={isLoadingCategories}
           />
           <SelectInput
             name="account"
             form={form}
+            isSkeleton={isFetchingEditTransaction}
             items={accounts ?? []}
             isLoading={isLoadingAccounts}
           />
-          <Input
+          <TextAreaInput
             name="notes"
             form={form}
+            isSkeleton={isFetchingEditTransaction}
           />
           <DateInput
             name="date"
@@ -96,7 +141,7 @@ export const TransactionsForm = ({ onClose }: TransactionsFormProps) => {
           />
         </Form>
       </Sheet.Body>
-      <Sheet.Footer>
+      <Sheet.Footer isLoading={isFetchingEditTransaction}>
         <Sheet.Close asChild>
           <Button
             disabled={isPending}

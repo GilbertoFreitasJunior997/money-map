@@ -1,5 +1,5 @@
-import { ComponentPropsWithoutRef, ElementRef, HTMLAttributes } from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
+import { ComponentPropsWithoutRef, ElementRef, HTMLAttributes } from "react";
 
 export type SheetOverlayProps = ComponentPropsWithoutRef<
   typeof SheetPrimitive.Overlay
@@ -15,7 +15,9 @@ export type SheetContentRef = ElementRef<typeof SheetPrimitive.Content>;
 
 export type SheetHeaderProps = HTMLAttributes<HTMLDivElement>;
 
-export type SheetFooterProps = HTMLAttributes<HTMLDivElement>;
+export type SheetFooterProps = HTMLAttributes<HTMLDivElement> & {
+  isLoading?: boolean;
+};
 
 export type SheetTitleProps = ComponentPropsWithoutRef<
   typeof SheetPrimitive.Title

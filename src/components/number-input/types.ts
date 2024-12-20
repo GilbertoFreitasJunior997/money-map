@@ -18,6 +18,7 @@ export type NumberInputProps<TForm extends FieldValues> = OmitMerge<
   NumberInputValueProps & InputDefaultProps<TForm>
 > & {
   label?: string;
+  isCurrency?: boolean;
   fractionDigits?: NumberInputFractionDigitsProps;
 };
 

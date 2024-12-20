@@ -12,8 +12,10 @@ import { TransactionItemProps } from "./types";
 export function TransactionItem({
   transaction,
   onRemoveClick,
+  onEditClick,
+  areButtonsDisabled,
 }: TransactionItemProps) {
-  const { id, description, notes, amount, type, category } = transaction;
+  const { description, notes, amount, type, category } = transaction;
 
   const typeConfig = {
     expense: {
@@ -36,21 +38,23 @@ export function TransactionItem({
   return (
     <div className="bg-card text-card-foreground border hover:border-accent-foreground/60 transition-colors rounded-lg p-4">
       <div className="flex items-center justify-between flex-col sm:flex-row">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 justify-between w-full md:justify-normal">
           <div className={cn("p-2 rounded-full", color)}>
             <Icon className="w-4 h-4" />
           </div>
-          <div>
-            <h3 className="text-lg font-semibold">{description}</h3>
-            <p className="text-sm text-muted-foreground">{notes}</p>
+          <div className="overflow-hidden">
+            <h3 className="text-lg font-semibold truncate">{description}</h3>
+            <p className="text-sm text-muted-foreground truncate">{notes}</p>
           </div>
         </div>
-        <div className="text-right">
-          <span className={cn("text-lg font-bold", color.split(" ")[0])}>
+        <div className="text-right flex md:block items-center justify-between w-full">
+          <span
+            className={cn("text-lg font-bold truncate", color.split(" ")[0])}
+          >
             {type === "expense" ? "-" : ""}$
             {Math.abs(Number.parseFloat(amount)).toFixed(2)}
           </span>
-          <div className="flex items-center justify-end mt-1 space-x-2">
+          <div className="flex items-center justify-end mt-1 space-x-2 grow">
             <span className="text-xs text-muted-foreground">
               Category: {category}
             </span>
@@ -58,16 +62,18 @@ export function TransactionItem({
             <Button
               variant="ghost"
               size="icon"
-              // onClick={onEdit}
-              className="h-8 w-8"
+              onClick={onEditClick}
+              className="size-8"
+              disabled={areButtonsDisabled}
             >
               <Edit2Icon className="w-4 h-4" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => onRemoveClick(id)}
-              className="h-8 w-8 text-destructive hover:text-destructive"
+              onClick={onRemoveClick}
+              className="size-8 text-destructive hover:text-destructive"
+              disabled={areButtonsDisabled}
             >
               <Trash2Icon className="w-4 h-4" />
             </Button>

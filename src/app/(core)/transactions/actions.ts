@@ -39,9 +39,9 @@ export const createTransaction = async (
     const user = await checkUser();
 
     const type = transactionTypeEnum.enumValues.includes(
-      data.type.label as TransactionType,
+      data.type.label.toLocaleLowerCase() as TransactionType,
     )
-      ? (data.type.label as TransactionType)
+      ? (data.type.label.toLocaleLowerCase() as TransactionType)
       : transactionTypeEnum.enumValues[0];
 
     const newTransaction = await transactionService.create({
@@ -100,6 +100,24 @@ export const getTransactionFormAccounts = async (): Promise<
     return {
       success: false,
       error: error,
+    };
+  }
+};
+
+export const getTransactionEditData = async (
+  id: number,
+): Promise<ActionResult<TransactionsFormSchemaData>> => {
+  try {
+    const data = await transactionService.getEditData(id);
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error,
     };
   }
 };

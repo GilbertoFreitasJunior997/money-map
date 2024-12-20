@@ -1,6 +1,9 @@
 import { ActionResult } from "@/lib/types";
 
+export type QueryKey = string | number;
+
 export type UseActionQueryOptions<TData> = {
   action: () => Promise<ActionResult<TData>>;
-  queryKey: string[];
+  queryKey: QueryKey[];
+  enabled?: boolean;
 };

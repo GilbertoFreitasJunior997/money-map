@@ -7,7 +7,11 @@ import { TransactionListLoading } from "./_components/transaction-list-loading";
 import { getTransactionListData } from "./actions";
 
 export default function Page() {
-  const { data: transactions, isLoading } = useActionQuery({
+  const {
+    data: transactions,
+    isLoading,
+    isFetching,
+  } = useActionQuery({
     action: getTransactionListData,
     queryKey: ["transactions"],
   });
@@ -25,7 +29,10 @@ export default function Page() {
         {isLoading ? (
           <TransactionListLoading />
         ) : (
-          <TransactionList transactions={transactions} />
+          <TransactionList
+            transactions={transactions}
+            isFetching={isFetching}
+          />
         )}
       </div>
     </div>

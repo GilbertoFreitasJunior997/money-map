@@ -11,7 +11,7 @@ export const TransactionListLayout = ({
         <div className="flex flex-wrap gap-2">{leftToolbarItems}</div>
         {rightToolbarItems}
       </div>
-      <div className="space-y-2">{list}</div>
+      <div className="space-y-2 overflow-hidden">{list}</div>
     </div>
   );
 };

@@ -2,18 +2,29 @@
 
 import { Button } from "@/components/button";
 import { uppercaseFirstLetter } from "@/lib/utils";
+import { useQueryClient } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { TransactionItem } from "../transaction-item";
+import { TransactionListEmpty } from "../transaction-list-empty";
 import { TransactionListLayout } from "../transaction-list-layout";
 import { TransactionRemoveDialog } from "../transaction-remove-dialog";
 import { TransactionSheet } from "../transaction-sheet";
 import { transactionListFilters } from "./consts";
 import { TransactionListFilter, TransactionListProps } from "./types";
 
-export const TransactionList = ({ transactions }: TransactionListProps) => {
+export const TransactionList = ({
+  transactions,
+  isFetching,
+}: TransactionListProps) => {
+  const queryClient = useQueryClient();
+  const isRemovingTransactions = !!queryClient.isMutating({
+    mutationKey: ["transactions"],
+  });
+
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [removeTransactionId, setRemoveTransactionId] = useState<number>();
+  const [editTransactionId, setEditTransactionId] = useState<number>();
   const [selectedFilter, setSelectedFilter] =
     useState<TransactionListFilter>("all");
 
@@ -31,8 +42,21 @@ export const TransactionList = ({ transactions }: TransactionListProps) => {
     );
   }, [transactions, selectedFilter]);
 
-  const handleOpenSheet = () => {
+  const handleOpenCreateSheet = () => {
     setIsSheetOpen(true);
+  };
+
+  const handleOpenEditSheet = (transactionId: number) => {
+    setEditTransactionId(transactionId);
+    setIsSheetOpen(true);
+  };
+
+  const handleSheetOpenChange = (isOpen: boolean) => {
+    if (!isOpen) {
+      setEditTransactionId(undefined);
+    }
+
+    setIsSheetOpen(isOpen);
   };
 
   const handleOpenRemoveDialog = (id: number) => {
@@ -42,6 +66,12 @@ export const TransactionList = ({ transactions }: TransactionListProps) => {
   const handleCloseRemoveDialog = () => {
     setRemoveTransactionId(undefined);
   };
+
+  const handleResetFilter = () => {
+    setSelectedFilter("all");
+  };
+
+  const areButtonsDisabled = isFetching || isRemovingTransactions;
 
   return (
     <>
@@ -58,26 +88,42 @@ export const TransactionList = ({ transactions }: TransactionListProps) => {
         ))}
         rightToolbarItems={
           <Button
-            onClick={handleOpenSheet}
+            onClick={handleOpenCreateSheet}
             size="sm"
+            disabled={areButtonsDisabled}
           >
             <PlusIcon className="w-4 h-4 mr-2" />
             Add Transaction
           </Button>
         }
-        list={filteredTransactions.map((transaction) => (
-          <TransactionItem
-            key={transaction.id}
-            transaction={transaction}
-            onRemoveClick={handleOpenRemoveDialog}
-            // onEdit={() => openEditSheet(transaction)}
-          />
-        ))}
+        list={
+          filteredTransactions.length ? (
+            filteredTransactions.map((transaction) => (
+              <TransactionItem
+                key={transaction.id}
+                transaction={transaction}
+                onRemoveClick={() => handleOpenRemoveDialog(transaction.id)}
+                onEditClick={() => handleOpenEditSheet(transaction.id)}
+                areButtonsDisabled={areButtonsDisabled}
+              />
+            ))
+          ) : (
+            <TransactionListEmpty
+              selectedFilter={selectedFilter}
+              hasTranasctions={!!transactions?.length}
+              onResetFilter={handleResetFilter}
+              onAddTransactionClick={handleOpenCreateSheet}
+            />
+          )
+        }
       />
+
       <TransactionSheet
         isOpen={isSheetOpen}
-        onOpenChange={setIsSheetOpen}
+        onOpenChange={handleSheetOpenChange}
+        editTransactionId={editTransactionId}
       />
+
       <TransactionRemoveDialog
         transactionId={removeTransactionId}
         onClose={handleCloseRemoveDialog}

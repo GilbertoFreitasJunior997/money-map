@@ -9,8 +9,6 @@ import {
 } from "@radix-ui/react-icons";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { forwardRef } from "react";
-import { Button } from "../button";
-import { Icon } from "../icon";
 import {
   SelectContentProps,
   SelectContentRef,
@@ -39,14 +37,16 @@ const Trigger = forwardRef<SelectTriggerRef, SelectTriggerProps>(
     <SelectPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        "flex h-8 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
         className,
       )}
       {...props}
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <CaretSortIcon className="size-4 opacity-50" />
+        <div className="flex gap-1">
+          <CaretSortIcon className="size-4 opacity-50" />
+        </div>
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   ),
@@ -130,39 +130,22 @@ const Label = forwardRef<SelectLabelRef, SelectLabelProps>(
 Label.displayName = SelectPrimitive.Label.displayName;
 
 const Item = forwardRef<SelectItemRef, SelectItemProps>(
-  ({ className, buttons, children, ...props }, ref) => (
-    <div className="flex items-center gap-1 rounded-sm focus:bg-accent hover:bg-accent focus:text-accent-foreground px-2">
-      <SelectPrimitive.Item
-        ref={ref}
-        className={cn(
-          "relative flex w-full cursor-default select-none items-center py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 grow",
-          className,
-        )}
-        {...props}
-      >
-        <span className="absolute right-2 flex items-center justify-center">
-          <SelectPrimitive.ItemIndicator>
-            <CheckIcon className="size-4" />
-          </SelectPrimitive.ItemIndicator>
-        </span>
-        <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-      </SelectPrimitive.Item>
-
-      {buttons?.map((button, index) => (
-        <Button
-          className="p-1 w-5 h-5 rounded-full"
-          variant="secondary"
-          key={index}
-          {...button}
-          onClick={() => button.onClick(props.value)}
-        >
-          <Icon
-            className="w-5"
-            {...button.icon}
-          />
-        </Button>
-      ))}
-    </div>
+  ({ className, children, ...props }, ref) => (
+    <SelectPrimitive.Item
+      ref={ref}
+      className={cn(
+        "relative flex w-full cursor-default select-none items-center py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 rounded-sm focus:bg-accent hover:bg-accent focus:text-accent-foreground px-2",
+        className,
+      )}
+      {...props}
+    >
+      <span className="absolute right-2 flex items-center justify-center">
+        <SelectPrimitive.ItemIndicator>
+          <CheckIcon className="size-4" />
+        </SelectPrimitive.ItemIndicator>
+      </span>
+      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+    </SelectPrimitive.Item>
   ),
 );
 Item.displayName = SelectPrimitive.Item.displayName;

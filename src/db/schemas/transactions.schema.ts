@@ -19,7 +19,7 @@ export const transactionTypeEnum = pgEnum("transaction_type", [
 export const transactionsTable = pgTable("transactions", {
   id: id(),
   description: text(),
-  notes: text(),
+  notes: text().notNull(),
   amount: decimal().notNull(),
   type: transactionTypeEnum().notNull(),
   date: date({

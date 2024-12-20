@@ -1,7 +1,5 @@
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ComponentPropsWithoutRef, ElementRef } from "react";
-import { ButtonProps } from "../button/types";
-import { IconProps } from "../icon/types";
 
 export type SelectTriggerProps = ComponentPropsWithoutRef<
   typeof SelectPrimitive.Trigger
@@ -32,15 +30,9 @@ export type SelectLabelProps = ComponentPropsWithoutRef<
 >;
 export type SelectLabelRef = ElementRef<typeof SelectPrimitive.Label>;
 
-export type SelectItemButton = Omit<ButtonProps, "onClick" | "children"> & {
-  icon: IconProps;
-  onClick: (value: string) => void;
-};
 export type SelectItemProps = ComponentPropsWithoutRef<
   typeof SelectPrimitive.Item
-> & {
-  buttons?: SelectItemButton[];
-};
+>;
 export type SelectItemRef = ElementRef<typeof SelectPrimitive.Item>;
 
 export type SelectSeparatorProps = ComponentPropsWithoutRef<
