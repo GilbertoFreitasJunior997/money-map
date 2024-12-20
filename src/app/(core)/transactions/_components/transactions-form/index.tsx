@@ -1,12 +1,14 @@
 "use client";
 
 import { Button } from "@/components/button";
+import { DateInput } from "@/components/date-input";
 import { Form } from "@/components/form";
 import { Input } from "@/components/input";
 import { NumberInput } from "@/components/number-input";
 import { SelectInput } from "@/components/select-input";
 import { selectBaseItemSchema } from "@/components/select-input/consts";
 import { Sheet } from "@/components/sheet";
+import { TextAreaInput } from "@/components/textarea-input";
 import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useActionQuery } from "@/lib/hooks/use-action-query";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
@@ -21,9 +23,6 @@ import {
 } from "../../actions";
 import { TRANSACTIONS_FORM_ID, transactionsFormTypeItems } from "./consts";
 import { TransactionsFormProps } from "./types";
-import { DateInput } from "@/components/date-input";
-import { TextAreaInput } from "@/components/textarea-input";
-
 
 const transactionsFormSchema = z.object({
   description: z.string().nullable(),
@@ -48,6 +47,7 @@ export const TransactionsForm = ({
       ? undefined
       : {
           type: transactionsFormTypeItems[0],
+          date: new Date(),
         },
   });
 
@@ -111,6 +111,11 @@ export const TransactionsForm = ({
             isCurrency={true}
             min={0.01}
           />
+          <DateInput
+            name="date"
+            form={form}
+            isSkeleton={isFetchingEditTransaction}
+          />
           <Input
             name="description"
             form={form}
@@ -134,10 +139,6 @@ export const TransactionsForm = ({
             name="notes"
             form={form}
             isSkeleton={isFetchingEditTransaction}
-          />
-          <DateInput
-            name="date"
-            form={form}
           />
         </Form>
       </Sheet.Body>

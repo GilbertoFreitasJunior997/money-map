@@ -1,9 +1,9 @@
 import { fixedForwardRef } from "@/lib/react";
 import { ForwardedRef } from "react";
 import { FieldValues } from "react-hook-form";
+import { DatePicker } from "../date-picker";
 import { FormInputBase } from "../form/components/form-input-base";
 import { DateInputProps, DateInputRef } from "./types";
-import { DatePicker } from "../date-picker";
 
 const DateInputBase = <TForm extends FieldValues>(
   {
@@ -12,6 +12,7 @@ const DateInputBase = <TForm extends FieldValues>(
     name,
     form,
     description,
+    isSkeleton,
     ...props
   }: DateInputProps<TForm>,
   ref: ForwardedRef<DateInputRef>,
@@ -22,6 +23,7 @@ const DateInputBase = <TForm extends FieldValues>(
       form={form}
       description={description}
       label={label}
+      isSkeleton={isSkeleton}
     >
       {({ field }) => {
         const value = form ? field?.value : baseValue;
