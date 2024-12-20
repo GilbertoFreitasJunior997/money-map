@@ -7,6 +7,7 @@ export const useActionMutation = <TData, TVariables>({
   onSuccess,
   onSettled,
   throwOnUndefined = false,
+  mutationKey,
 }: UseActionMutationOptions<TData, TVariables>) => {
   return useMutation({
     mutationFn: action,
@@ -40,5 +41,6 @@ export const useActionMutation = <TData, TVariables>({
       }
       toast.error(errorMessage);
     },
+    mutationKey,
   });
 };

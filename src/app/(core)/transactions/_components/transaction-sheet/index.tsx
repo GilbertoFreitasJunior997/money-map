@@ -5,6 +5,7 @@ import { TransactionSheetProps } from "./types";
 export const TransactionSheet = ({
   isOpen,
   onOpenChange,
+  editTransactionId,
 }: TransactionSheetProps) => {
   const handleClose = () => {
     onOpenChange(false);
@@ -16,9 +17,14 @@ export const TransactionSheet = ({
       onOpenChange={onOpenChange}
     >
       <Sheet.Content>
-        <Sheet.Title>Create Account</Sheet.Title>
+        <Sheet.Title>
+          {editTransactionId ? "Edit" : "New"} Transaction
+        </Sheet.Title>
 
-        <TransactionsForm onClose={handleClose} />
+        <TransactionsForm
+          editTransactionId={editTransactionId}
+          onClose={handleClose}
+        />
       </Sheet.Content>
     </Sheet.Root>
   );

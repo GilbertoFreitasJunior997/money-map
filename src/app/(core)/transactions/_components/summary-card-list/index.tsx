@@ -1,9 +1,3 @@
-import {
-  ArrowRightLeft,
-  DollarSignIcon,
-  TrendingDownIcon,
-  TrendingUpIcon,
-} from "lucide-react";
 import { SummaryCard } from "../summary-card";
 import { SummaryCardListProps } from "./types";
 
@@ -45,27 +39,23 @@ export const SummaryCardList = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <SummaryCard
-        title="Total Balance"
+        type="all"
         value={total}
-        icon={DollarSignIcon}
         isLoading={isLoading}
       />
       <SummaryCard
-        title="Income"
+        type="income"
         value={income}
-        icon={TrendingUpIcon}
         isLoading={isLoading}
       />
       <SummaryCard
-        title="Expenses"
+        type="expense"
         value={expenses}
-        icon={TrendingDownIcon}
         isLoading={isLoading}
       />
       <SummaryCard
-        title="Transfers"
+        type="transfer"
         value={transfers}
-        icon={ArrowRightLeft}
         isLoading={isLoading}
       />
     </div>

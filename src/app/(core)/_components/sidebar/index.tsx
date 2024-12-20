@@ -20,7 +20,7 @@ export const Sidebar = ({ UserNav }: SidebarProps) => {
     <div
       className={cn(
         "rounded-xl p-2 flex flex-col justify-between items-center border transition-[width]",
-        !isOpen ? "w-[258px]" : "w-[58px]",
+        isOpen ? "md:w-[258px] w-[58px]" : "w-[58px]",
       )}
     >
       <div className="space-y-6 w-full overflow-hidden">

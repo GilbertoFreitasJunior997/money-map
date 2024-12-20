@@ -43,6 +43,7 @@ export const AccountsForm = ({ onClose }: AccountsFormProps) => {
           <NumberInput
             name="balance"
             form={form}
+            isCurrency={true}
           />
         </Form>
       </Sheet.Body>

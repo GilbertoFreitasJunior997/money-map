@@ -41,6 +41,7 @@ export const TransactionRemoveDialog = ({
   const { mutate, isPending } = useActionMutation({
     action: handleRemoveAction,
     onSuccess: handleSettled,
+    mutationKey: ["transactions"],
   });
 
   return (

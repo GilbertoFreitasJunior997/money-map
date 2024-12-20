@@ -17,6 +17,7 @@ const InputBase = <TForm extends FieldValues>(
     children: _,
     form,
     description,
+    isSkeleton,
     ...props
   }: InputProps<TForm>,
   ref: ForwardedRef<InputRef>,
@@ -26,6 +27,7 @@ const InputBase = <TForm extends FieldValues>(
     form={form}
     description={description}
     label={label}
+    isSkeleton={isSkeleton}
   >
     {({ field }) => {
       const value = form ? (field?.value ?? "") : baseValue;

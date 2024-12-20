@@ -104,6 +104,24 @@ export const getTransactionFormAccounts = async (): Promise<
   }
 };
 
+export const getTransactionEditData = async (
+  id: number,
+): Promise<ActionResult<TransactionsFormSchemaData>> => {
+  try {
+    const data = await transactionService.getEditData(id);
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error,
+    };
+  }
+};
+
 export const removeTransaction = async (
   id: number,
 ): Promise<ActionResult<Transaction>> => {

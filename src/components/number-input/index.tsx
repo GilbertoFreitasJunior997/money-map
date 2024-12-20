@@ -4,8 +4,8 @@ import { ChangeEvent, ForwardedRef } from "react";
 import { FieldValues } from "react-hook-form";
 import { FormInputBase } from "../form/components/form-input-base";
 import { Input } from "../input";
+import { currencyFormatter } from "./consts";
 import { NumberInputProps, NumberInputRef } from "./types";
-import { formatter } from "./consts";
 
 const NumberInputBase = <TForm extends FieldValues>(
   {
@@ -16,7 +16,9 @@ const NumberInputBase = <TForm extends FieldValues>(
     name,
     description,
     label,
+    isCurrency,
     onChange,
+    isSkeleton,
     ...props
   }: NumberInputProps<TForm>,
   ref: ForwardedRef<NumberInputRef>,
@@ -26,6 +28,7 @@ const NumberInputBase = <TForm extends FieldValues>(
     form={form}
     description={description}
     label={label}
+    isSkeleton={isSkeleton}
   >
     {({ field }) => {
       const { max } = fractionDigits;
@@ -51,7 +54,11 @@ const NumberInputBase = <TForm extends FieldValues>(
       };
 
       const baseValue = form ? field?.value : value;
-      let inputValue = baseValue ? formatter.format(baseValue) : "";
+      let inputValue = baseValue
+        ? isCurrency
+          ? currencyFormatter.format(baseValue)
+          : baseValue.toString()
+        : "";
       if (inputValue === "NaN") {
         inputValue = "";
       }

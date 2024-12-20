@@ -6,6 +6,7 @@ export type InputDefaultProps<TForm extends FieldValues> = {
   name: NoInfer<keyof TForm>;
   description?: string;
   form?: UseFormReturn<TForm>;
+  isSkeleton?: boolean;
 };
 
 type FormCustomProps<TForm extends FieldValues> = {
