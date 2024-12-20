@@ -3,7 +3,6 @@
 import { Button } from "@/components/button";
 import { Form } from "@/components/form";
 import { Input } from "@/components/input";
-import { NumberInput } from "@/components/number-input";
 import { Sheet } from "@/components/sheet";
 import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
@@ -14,7 +13,7 @@ import { AccountsFormProps } from "./types";
 
 const accountsFormSchema = z.object({
   name: z.string().min(2),
-  balance: z.number(),
+  note: z.string().min(2),
 });
 export type AccountsFormSchemaData = z.infer<typeof accountsFormSchema>;
 
@@ -40,8 +39,8 @@ export const AccountsForm = ({ onClose }: AccountsFormProps) => {
             name="name"
             form={form}
           />
-          <NumberInput
-            name="balance"
+          <Input
+            name="note"
             form={form}
           />
         </Form>
