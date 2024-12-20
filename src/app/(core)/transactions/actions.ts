@@ -4,11 +4,33 @@ import { SelectBaseItem } from "@/components/select-input/types";
 import { transactionTypeEnum } from "@/db/schemas/transactions.schema";
 import { checkUser } from "@/lib/session";
 import { ActionResult } from "@/lib/types";
-import { Transaction, TransactionType } from "@/models/transaction.model";
+import {
+  Transaction,
+  TransactionListData,
+  TransactionType,
+} from "@/models/transaction.model";
 import { accountService } from "@/services/account";
 import { transactionService } from "@/services/transaction";
 import { transactionCategoryService } from "@/services/transaction-category";
 import { TransactionsFormSchemaData } from "./_components/transactions-form";
+
+export const getTransactionListData = async (): Promise<
+  ActionResult<TransactionListData[]>
+> => {
+  try {
+    const data = await transactionService.getListData();
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error,
+    };
+  }
+};
 
 export const createTransaction = async (
   data: TransactionsFormSchemaData,
@@ -20,14 +42,14 @@ export const createTransaction = async (
       data.type.label as TransactionType,
     )
       ? (data.type.label as TransactionType)
-      : (transactionTypeEnum.enumName[0] as TransactionType);
+      : transactionTypeEnum.enumValues[0];
 
     const newTransaction = await transactionService.create({
       amount: data.amount.toString(),
       type: type,
       accountId: data.account.id,
       categoryId: data.category.id,
-      date: data.date.toString(),
+      // date: data.date.toString(),
       description: data.description,
       notes: data.notes,
       userId: user.id,
@@ -36,6 +58,7 @@ export const createTransaction = async (
     return {
       success: true,
       data: newTransaction,
+      message: "Transaction added",
     };
   } catch (error) {
     return {
@@ -49,8 +72,6 @@ export const getTransactionFormTransactionCategories = async (): Promise<
   ActionResult<SelectBaseItem[]>
 > => {
   try {
-    await checkUser();
-
     const data = await transactionCategoryService.getSelectData();
 
     return {
@@ -69,8 +90,6 @@ export const getTransactionFormAccounts = async (): Promise<
   ActionResult<SelectBaseItem[]>
 > => {
   try {
-    await checkUser();
-
     const data = await accountService.getSelectData();
 
     return {
@@ -81,6 +100,24 @@ export const getTransactionFormAccounts = async (): Promise<
     return {
       success: false,
       error: error,
+    };
+  }
+};
+
+export const removeTransaction = async (
+  id: number,
+): Promise<ActionResult<Transaction>> => {
+  try {
+    const data = await transactionService.delete(id);
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error,
     };
   }
 };

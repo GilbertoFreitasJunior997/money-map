@@ -5,11 +5,14 @@ import { UseActionMutationOptions } from "./types";
 export const useActionMutation = <TData, TVariables>({
   action,
   onSuccess,
+  onSettled,
   throwOnUndefined = false,
 }: UseActionMutationOptions<TData, TVariables>) => {
   return useMutation({
     mutationFn: action,
     onSettled: async (result) => {
+      await onSettled?.();
+
       if (!result) {
         if (!throwOnUndefined) {
           return;

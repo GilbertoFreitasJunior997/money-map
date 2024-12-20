@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/button";
-import { DatePicker } from "@/components/date-picker";
 import { Form } from "@/components/form";
 import { Input } from "@/components/input";
 import { NumberInput } from "@/components/number-input";
@@ -10,7 +9,6 @@ import { Sheet } from "@/components/sheet";
 import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useActionQuery } from "@/lib/hooks/use-action-query";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
-import { useState } from "react";
 import { z } from "zod";
 import {
   createTransaction,
@@ -25,7 +23,7 @@ const transactionsFormSchema = z.object({
   notes: z.string(),
   amount: z.number(),
   type: selectBaseItemSchema,
-  date: z.date(),
+  // date: z.date(),
   account: selectBaseItemSchema,
   category: selectBaseItemSchema,
 });
@@ -54,8 +52,6 @@ export const TransactionsForm = ({ onClose }: TransactionsFormProps) => {
     queryKey: ["accounts"],
   });
 
-  const [date, setDate] = useState<Date>();
-
   return (
     <>
       <Sheet.Body>
@@ -72,10 +68,6 @@ export const TransactionsForm = ({ onClose }: TransactionsFormProps) => {
           <NumberInput
             name="amount"
             form={form}
-          />
-          <DatePicker
-            value={date}
-            onChange={setDate}
           />
           <Input
             name="description"
@@ -109,6 +101,7 @@ export const TransactionsForm = ({ onClose }: TransactionsFormProps) => {
           </Button>
         </Sheet.Close>
         <Button
+          type="submit"
           isLoading={isPending}
           form={TRANSACTIONS_FORM_ID}
         >

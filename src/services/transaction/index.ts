@@ -7,7 +7,7 @@ import {
   TransactionInsert,
   TransactionListData,
 } from "@/models/transaction.model";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { createService } from "../_base";
 
 const baseService = createService<Transaction, TransactionInsert>(
@@ -33,7 +33,8 @@ export const transactionService = {
       .leftJoin(
         transactionCategoriesTable,
         eq(transactionsTable.categoryId, transactionCategoriesTable.id),
-      );
+      )
+      .orderBy(desc(transactionsTable.createdAt));
 
     return data;
   },

@@ -22,7 +22,9 @@ export const transactionsTable = pgTable("transactions", {
   notes: text(),
   amount: decimal().notNull(),
   type: transactionTypeEnum().notNull(),
-  date: date(),
+  date: date({
+    mode: "date",
+  }),
   createdAt: createdAt(),
   updatedAt: updatedAt(),
 

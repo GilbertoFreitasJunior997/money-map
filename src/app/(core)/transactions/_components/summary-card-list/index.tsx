@@ -5,37 +5,68 @@ import {
   TrendingUpIcon,
 } from "lucide-react";
 import { SummaryCard } from "../summary-card";
+import { SummaryCardListProps } from "./types";
 
-export const SummaryCardList = () => {
+export const SummaryCardList = ({
+  transactions,
+  isLoading,
+}: SummaryCardListProps) => {
+  let total = 0;
+  let income = 0;
+  let expenses = 0;
+  let transfers = 0;
+
+  if (!isLoading && transactions) {
+    for (const transaction of transactions) {
+      const amount = Number.parseFloat(transaction.amount);
+
+      switch (transaction.type) {
+        case "income": {
+          income += amount;
+          total += amount;
+          break;
+        }
+        case "expense": {
+          expenses += amount;
+          total -= amount;
+          break;
+        }
+        case "transfer": {
+          transfers += amount;
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <SummaryCard
         title="Total Balance"
-        value="$3500"
+        value={total}
         icon={DollarSignIcon}
-        trend="up"
-        trendValue="8% from last month"
+        isLoading={isLoading}
       />
       <SummaryCard
         title="Income"
-        value="$4500"
+        value={income}
         icon={TrendingUpIcon}
-        trend="up"
-        trendValue="12% from last month"
+        isLoading={isLoading}
       />
       <SummaryCard
         title="Expenses"
-        value="$750"
+        value={expenses}
         icon={TrendingDownIcon}
-        trend="down"
-        trendValue="3% from last month"
+        isLoading={isLoading}
       />
       <SummaryCard
         title="Transfers"
-        value="$250"
+        value={transfers}
         icon={ArrowRightLeft}
-        trend="neutral"
-        trendValue="Same as last month"
+        isLoading={isLoading}
       />
     </div>
   );

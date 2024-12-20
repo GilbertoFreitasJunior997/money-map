@@ -11,10 +11,9 @@ import { TransactionItemProps } from "./types";
 
 export function TransactionItem({
   transaction,
-  // onEdit,
-  // onDelete,
+  onRemoveClick,
 }: TransactionItemProps) {
-  const { description, notes, amount, type, category } = transaction;
+  const { id, description, notes, amount, type, category } = transaction;
 
   const typeConfig = {
     expense: {
@@ -35,8 +34,8 @@ export function TransactionItem({
   const { color, icon: Icon } = typeConfig[type];
 
   return (
-    <div className="bg-card text-card-foreground border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between">
+    <div className="bg-card text-card-foreground border hover:border-accent-foreground/60 transition-colors rounded-lg p-4">
+      <div className="flex items-center justify-between flex-col sm:flex-row">
         <div className="flex items-center space-x-4">
           <div className={cn("p-2 rounded-full", color)}>
             <Icon className="w-4 h-4" />
@@ -49,7 +48,7 @@ export function TransactionItem({
         <div className="text-right">
           <span className={cn("text-lg font-bold", color.split(" ")[0])}>
             {type === "expense" ? "-" : ""}$
-            {Number.parseFloat(amount).toFixed(2)}
+            {Math.abs(Number.parseFloat(amount)).toFixed(2)}
           </span>
           <div className="flex items-center justify-end mt-1 space-x-2">
             <span className="text-xs text-muted-foreground">
@@ -67,7 +66,7 @@ export function TransactionItem({
             <Button
               variant="ghost"
               size="icon"
-              // onClick={onDelete}
+              onClick={() => onRemoveClick(id)}
               className="h-8 w-8 text-destructive hover:text-destructive"
             >
               <Trash2Icon className="w-4 h-4" />

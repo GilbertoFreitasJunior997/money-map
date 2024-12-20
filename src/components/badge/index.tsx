@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import { BadgeProps } from "./types";
 import { badgeVariants } from "./consts";
+import { BadgeProps } from "./types";
 
 export const Badge = ({ className, variant, ...props }: BadgeProps) => {
   return (

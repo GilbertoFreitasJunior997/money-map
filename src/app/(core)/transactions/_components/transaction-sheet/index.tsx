@@ -4,16 +4,16 @@ import { TransactionSheetProps } from "./types";
 
 export const TransactionSheet = ({
   isOpen,
-  setIsOpen,
+  onOpenChange,
 }: TransactionSheetProps) => {
   const handleClose = () => {
-    setIsOpen(false);
+    onOpenChange(false);
   };
 
   return (
     <Sheet.Root
       open={isOpen}
-      onOpenChange={setIsOpen}
+      onOpenChange={onOpenChange}
     >
       <Sheet.Content>
         <Sheet.Title>Create Account</Sheet.Title>
