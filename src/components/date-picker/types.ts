@@ -1,6 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
-
 export type DatePickerProps = {
-  value: Date | undefined;
-  onChange: Dispatch<SetStateAction<Date | undefined>>;
+  value?: Date;
+  onChange: (value?: Date) => void;
 };

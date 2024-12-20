@@ -17,13 +17,14 @@ import {
 } from "../../actions";
 import { TRANSACTIONS_FORM_ID, transactionsFormTypeItems } from "./consts";
 import { TransactionsFormProps } from "./types";
+import { DateInput } from "@/components/date-input";
 
 const transactionsFormSchema = z.object({
   description: z.string(),
   notes: z.string(),
   amount: z.number(),
   type: selectBaseItemSchema,
-  // date: z.date(),
+  date: z.date(),
   account: selectBaseItemSchema,
   category: selectBaseItemSchema,
 });
@@ -87,6 +88,10 @@ export const TransactionsForm = ({ onClose }: TransactionsFormProps) => {
           />
           <Input
             name="notes"
+            form={form}
+          />
+          <DateInput
+            name="date"
             form={form}
           />
         </Form>

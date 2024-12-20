@@ -49,7 +49,7 @@ export const createTransaction = async (
       type: type,
       accountId: data.account.id,
       categoryId: data.category.id,
-      // date: data.date.toString(),
+      date: data.date,
       description: data.description,
       notes: data.notes,
       userId: user.id,
