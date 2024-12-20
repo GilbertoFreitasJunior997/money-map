@@ -15,20 +15,20 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
         <Button
           variant="outline"
           className={cn(
-            "w-[280px] justify-start text-left font-normal",
+            "w-full justify-start text-left font-normal",
             !value && "text-muted-foreground",
           )}
         >
           <CalendarIcon className="mr-2 size-4" />
-          {value ? format(value, "PPP") : <span>Pick a date</span>}
+          {value ? format(value, "dd/MM/yyyy") : <span>Pick a date</span>}
         </Button>
       </Popover.Trigger>
-      <Popover.Content className="w-auto p-0">
+      <Popover.Content className="w-[--radix-popover-trigger-width] p-0">
         <Calendar
           mode="single"
           selected={value}
           onSelect={onChange}
-          initialFocus
+          autoFocus
         />
       </Popover.Content>
     </Popover.Root>

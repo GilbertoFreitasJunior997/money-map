@@ -50,6 +50,7 @@ export const transactionService = {
         notes: transactionsTable.notes,
         amount: transactionsTable.amount,
         type: transactionsTable.type,
+        date: transactionsTable.date,
         account: {
           id: accountsTable.id,
           label: accountsTable.name,

@@ -4,13 +4,13 @@ import { Button } from "@/components/button";
 import { Form } from "@/components/form";
 import { Input } from "@/components/input";
 import { Sheet } from "@/components/sheet";
+import { TextAreaInput } from "@/components/textarea-input";
 import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
 import { z } from "zod";
 import { createAccount } from "../../actions";
 import { ACCOUNTS_FORM_ID } from "./consts";
 import { AccountsFormProps } from "./types";
-import { TextAreaInput } from "@/components/textarea-input";
 
 const accountsFormSchema = z.object({
   name: z.string().min(2),
@@ -43,7 +43,6 @@ export const AccountsForm = ({ onClose }: AccountsFormProps) => {
           <TextAreaInput
             name="notes"
             form={form}
-            isCurrency={true}
           />
         </Form>
       </Sheet.Body>
