@@ -10,10 +10,11 @@ import { z } from "zod";
 import { createAccount } from "../../actions";
 import { ACCOUNTS_FORM_ID } from "./consts";
 import { AccountsFormProps } from "./types";
+import { TextAreaInput } from "@/components/textarea-input";
 
 const accountsFormSchema = z.object({
   name: z.string().min(2),
-  note: z.string().min(2),
+  notes: z.string().min(2),
 });
 export type AccountsFormSchemaData = z.infer<typeof accountsFormSchema>;
 
@@ -39,8 +40,8 @@ export const AccountsForm = ({ onClose }: AccountsFormProps) => {
             name="name"
             form={form}
           />
-          <Input
-            name="note"
+          <TextAreaInput
+            name="notes"
             form={form}
           />
         </Form>
