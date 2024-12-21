@@ -2,15 +2,15 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { UseActionMutationOptions } from "./types";
 
-export const useActionMutation = <TData, TVariables>({
+export const useActionMutation = <TData, TVariables extends unknown[]>({
   action,
   onSuccess,
   onSettled,
   throwOnUndefined = false,
   mutationKey,
 }: UseActionMutationOptions<TData, TVariables>) => {
-  return useMutation({
-    mutationFn: action,
+  const mutation = useMutation({
+    mutationFn: (variables: TVariables) => action(...variables),
     onSettled: async (result) => {
       await onSettled?.();
 
@@ -43,4 +43,12 @@ export const useActionMutation = <TData, TVariables>({
     },
     mutationKey,
   });
+
+  const wrappedMutate = (...variables: TVariables) =>
+    mutation.mutate(variables);
+
+  return {
+    ...mutation,
+    mutate: wrappedMutate,
+  };
 };

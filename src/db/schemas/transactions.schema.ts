@@ -1,10 +1,10 @@
 import {
-  date,
   decimal,
   integer,
   pgEnum,
   pgTable,
   text,
+  timestamp,
 } from "drizzle-orm/pg-core";
 import { createdAt, id, updatedAt, userId } from "./_utils";
 import { accountsTable } from "./accounts.schema";
@@ -20,11 +20,10 @@ export const transactionsTable = pgTable("transactions", {
   id: id(),
   description: text(),
   notes: text(),
-  amount: decimal().notNull(),
+  amount: decimal({ scale: 2 }).notNull(),
   type: transactionTypeEnum().notNull(),
-  date: date({
-    mode: "date",
-  }),
+  date: timestamp({ mode: "date", withTimezone: true }).notNull().defaultNow(),
+
   createdAt: createdAt(),
   updatedAt: updatedAt(),
 

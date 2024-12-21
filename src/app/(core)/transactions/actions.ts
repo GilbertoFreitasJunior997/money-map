@@ -6,6 +6,7 @@ import { checkUser } from "@/lib/session";
 import { ActionResult } from "@/lib/types";
 import {
   Transaction,
+  TransactionInsert,
   TransactionListData,
   TransactionType,
 } from "@/models/transaction.model";
@@ -32,9 +33,10 @@ export const getTransactionListData = async (): Promise<
   }
 };
 
-export const createTransaction = async (
+export const upsertTransaction = async (
+  id: number | undefined,
   data: TransactionsFormSchemaData,
-): Promise<ActionResult<Transaction>> => {
+): Promise<ActionResult<TransactionListData>> => {
   try {
     const user = await checkUser();
 
@@ -44,21 +46,30 @@ export const createTransaction = async (
       ? (data.type.label.toLocaleLowerCase() as TransactionType)
       : transactionTypeEnum.enumValues[0];
 
-    const newTransaction = await transactionService.create({
+    const transactionInsert: TransactionInsert = {
       amount: data.amount.toString(),
       type: type,
       accountId: data.account.id,
       categoryId: data.category.id,
-      date: data.date,
+      date: new Date(data.date),
       description: data.description,
       notes: data.notes,
       userId: user.id,
-    });
+    };
+
+    const transaction = id
+      ? await transactionService.update(id, transactionInsert)
+      : await transactionService.create(transactionInsert);
+
+    const transactionListData: TransactionListData = {
+      ...transaction,
+      category: data.category.label,
+    };
 
     return {
       success: true,
-      data: newTransaction,
-      message: "Transaction added",
+      data: transactionListData,
+      message: `Transaction ${id ? "updated" : "created"}`,
     };
   } catch (error) {
     return {

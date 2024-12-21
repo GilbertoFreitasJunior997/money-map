@@ -12,14 +12,15 @@ import { TextAreaInput } from "@/components/textarea-input";
 import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useActionQuery } from "@/lib/hooks/use-action-query";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
+import { TransactionListData } from "@/models/transaction.model";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { z } from "zod";
 import {
-  createTransaction,
   getTransactionEditData,
   getTransactionFormAccounts,
   getTransactionFormTransactionCategories,
+  upsertTransaction,
 } from "../../actions";
 import { TRANSACTIONS_FORM_ID, transactionsFormTypeItems } from "./consts";
 import { TransactionsFormProps } from "./types";
@@ -51,7 +52,28 @@ export const TransactionsForm = ({
         },
   });
 
-  const handleClose = () => {
+  const handleSuccess = (data: TransactionListData) => {
+    queryClient.setQueryData(
+      ["transactions"],
+      (oldData: TransactionListData[]) => {
+        if (!oldData) {
+          return oldData;
+        }
+
+        if (editTransactionId) {
+          return oldData.map((transaction) => {
+            if (transaction.id === editTransactionId) {
+              return data;
+            }
+
+            return transaction;
+          });
+        }
+
+        return [data, ...oldData];
+      },
+    );
+
     queryClient.invalidateQueries({
       queryKey: ["transactions"],
       exact: false,
@@ -61,8 +83,8 @@ export const TransactionsForm = ({
   };
 
   const { mutate, isPending } = useActionMutation({
-    action: createTransaction,
-    onSuccess: handleClose,
+    action: upsertTransaction,
+    onSuccess: handleSuccess,
   });
 
   const { data: editTransaction, isFetching: isFetchingEditTransaction } =
@@ -96,7 +118,7 @@ export const TransactionsForm = ({
         <Form
           id={TRANSACTIONS_FORM_ID}
           form={form}
-          onSubmit={mutate}
+          onSubmit={(data) => mutate(editTransactionId, data)}
         >
           <SelectInput
             name="type"
@@ -142,6 +164,7 @@ export const TransactionsForm = ({
           />
         </Form>
       </Sheet.Body>
+
       <Sheet.Footer isLoading={isFetchingEditTransaction}>
         <Sheet.Close asChild>
           <Button
@@ -151,12 +174,13 @@ export const TransactionsForm = ({
             Cancel
           </Button>
         </Sheet.Close>
+
         <Button
           type="submit"
           isLoading={isPending}
           form={TRANSACTIONS_FORM_ID}
         >
-          Create Account
+          {editTransactionId ? "Update" : "Create"} Transaction
         </Button>
       </Sheet.Footer>
     </>

@@ -1,4 +1,3 @@
-import { sql } from "drizzle-orm";
 import { integer, serial, timestamp } from "drizzle-orm/pg-core";
 import { usersTable } from "./users.schema";
 
@@ -16,4 +15,4 @@ export const updatedAt = () =>
   timestamp("updated_at")
     .notNull()
     .defaultNow()
-    .$onUpdate(() => sql`CURRENT_TIMESTAMP`);
+    .$onUpdate(() => new Date());
