@@ -32,7 +32,7 @@ export const ProfileSheetForm = ({ user }: { user: UserAuth }) => {
   });
 
   const handleFormSubmit = async ({ name }: ProfileFormData) => {
-    await mutate({ ...user, name });
+    await mutate([{ ...user, name }]);
   };
 
   return (
