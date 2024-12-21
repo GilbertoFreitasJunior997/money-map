@@ -15,11 +15,12 @@ import { transactionService } from "@/services/transaction";
 import { transactionCategoryService } from "@/services/transaction-category";
 import { TransactionsFormSchemaData } from "./_components/transactions-form";
 
-export const getTransactionListData = async (): Promise<
-  ActionResult<TransactionListData[]>
-> => {
+export const getTransactionListData = async (
+  periodStart: Date,
+  periodEnd: Date,
+): Promise<ActionResult<TransactionListData[]>> => {
   try {
-    const data = await transactionService.getListData();
+    const data = await transactionService.getListData(periodStart, periodEnd);
 
     return {
       success: true,
@@ -36,7 +37,7 @@ export const getTransactionListData = async (): Promise<
 export const upsertTransaction = async (
   id: number | undefined,
   data: TransactionsFormSchemaData,
-): Promise<ActionResult<TransactionListData>> => {
+): Promise<ActionResult<Transaction>> => {
   try {
     const user = await checkUser();
 
@@ -61,14 +62,9 @@ export const upsertTransaction = async (
       ? await transactionService.update(id, transactionInsert)
       : await transactionService.create(transactionInsert);
 
-    const transactionListData: TransactionListData = {
-      ...transaction,
-      category: data.category.label,
-    };
-
     return {
       success: true,
-      data: transactionListData,
+      data: transaction,
       message: `Transaction ${id ? "updated" : "created"}`,
     };
   } catch (error) {

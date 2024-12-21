@@ -1,19 +1,25 @@
 "use client";
 
 import { useActionQuery } from "@/lib/hooks/use-action-query";
+import { useState } from "react";
 import { SummaryCardList } from "./_components/summary-card-list";
 import { TransactionList } from "./_components/transaction-list";
 import { TransactionListLoading } from "./_components/transaction-list-loading";
 import { getTransactionListData } from "./actions";
 
 export default function Page() {
+  const [period, _setPeriod] = useState({
+    start: new Date(new Date().setMonth(new Date().getMonth() - 1)),
+    end: new Date(),
+  });
+
   const {
     data: transactions,
     isLoading,
     isFetching,
   } = useActionQuery({
-    action: getTransactionListData,
-    queryKey: ["transactions"],
+    action: () => getTransactionListData(period.start, period.end),
+    queryKey: ["transactions", period.start, period.end],
   });
 
   return (

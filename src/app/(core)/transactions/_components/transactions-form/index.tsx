@@ -12,7 +12,6 @@ import { TextAreaInput } from "@/components/textarea-input";
 import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useActionQuery } from "@/lib/hooks/use-action-query";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
-import { TransactionListData } from "@/models/transaction.model";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { z } from "zod";
@@ -52,28 +51,7 @@ export const TransactionsForm = ({
         },
   });
 
-  const handleSuccess = (data: TransactionListData) => {
-    queryClient.setQueryData(
-      ["transactions"],
-      (oldData: TransactionListData[]) => {
-        if (!oldData) {
-          return oldData;
-        }
-
-        if (editTransactionId) {
-          return oldData.map((transaction) => {
-            if (transaction.id === editTransactionId) {
-              return data;
-            }
-
-            return transaction;
-          });
-        }
-
-        return [data, ...oldData];
-      },
-    );
-
+  const handleSuccess = () => {
     queryClient.invalidateQueries({
       queryKey: ["transactions"],
       exact: false,

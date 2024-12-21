@@ -10,7 +10,7 @@ import {
   TransactionInsert,
   TransactionListData,
 } from "@/models/transaction.model";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, gte, lt } from "drizzle-orm";
 import { createService } from "../_base";
 
 const baseService = createService<Transaction, TransactionInsert>(
@@ -19,7 +19,10 @@ const baseService = createService<Transaction, TransactionInsert>(
 
 export const transactionService = {
   ...baseService,
-  getListData: async (): Promise<TransactionListData[]> => {
+  getListData: async (
+    periodStart: Date,
+    periodEnd: Date,
+  ): Promise<TransactionListData[]> => {
     const user = await checkUser();
 
     const data = await db
@@ -32,7 +35,13 @@ export const transactionService = {
         category: transactionCategoriesTable.name,
       })
       .from(transactionsTable)
-      .where(eq(transactionsTable.userId, user.id))
+      .where(
+        and(
+          eq(transactionsTable.userId, user.id),
+          gte(transactionsTable.date, periodStart),
+          lt(transactionsTable.date, periodEnd),
+        ),
+      )
       .leftJoin(
         transactionCategoriesTable,
         eq(transactionsTable.categoryId, transactionCategoriesTable.id),
