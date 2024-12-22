@@ -1,3 +1,4 @@
+import { AccountsFormSchemaData } from "@/app/(core)/accounts/_components/accounts-form";
 import { SelectBaseItem } from "@/components/select-input/types";
 import { db } from "@/db";
 import { accountsTable } from "@/db/schemas/accounts.schema";
@@ -38,5 +39,16 @@ export const accountService = {
       .where(eq(accountsTable.userId, user.id));
 
     return data;
+  },
+  getEditData: async (id: number): Promise<AccountsFormSchemaData> => {
+    const [account] = await db
+      .select({
+        name: accountsTable.name,
+      })
+      .from(accountsTable)
+      .where(eq(accountsTable.id, id))
+      .limit(1);
+
+    return account;
   },
 };

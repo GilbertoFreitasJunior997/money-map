@@ -5,6 +5,7 @@ export const usersTable = pgTable("users", {
   email: text().notNull().unique(),
   name: text().notNull(),
   password: text(),
+
   googleId: text("google_id"),
   githubId: text("github_id"),
 });

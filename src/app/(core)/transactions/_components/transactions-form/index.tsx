@@ -110,6 +110,7 @@ export const TransactionsForm = ({
             isSkeleton={isFetchingEditTransaction}
             isCurrency={true}
             min={0.01}
+            placeholder="$0.00"
           />
           <DateInput
             name="date"
@@ -120,6 +121,7 @@ export const TransactionsForm = ({
             name="description"
             form={form}
             isSkeleton={isFetchingEditTransaction}
+            placeholder="e.g. Groceries"
           />
           <SelectInput
             name="category"
@@ -158,7 +160,7 @@ export const TransactionsForm = ({
           isLoading={isPending}
           form={TRANSACTIONS_FORM_ID}
         >
-          {editTransactionId ? "Update" : "Create"} Transaction
+          Save Transaction
         </Button>
       </Sheet.Footer>
     </>

@@ -8,6 +8,7 @@ export const DataTableToolbar = <TData,>({
   table,
   create,
   entityName,
+  areButtonsDisabled,
 }: DataTableToolbarProps<TData>) => {
   return (
     <div className="flex items-center justify-between">
@@ -15,6 +16,7 @@ export const DataTableToolbar = <TData,>({
         {!!create && (
           <Button
             variant="default"
+            disabled={areButtonsDisabled}
             {...create}
           >
             <Icon src={Plus} />

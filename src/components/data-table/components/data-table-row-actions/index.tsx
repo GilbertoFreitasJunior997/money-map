@@ -13,6 +13,7 @@ export const DataTableRowActions = <TData,>({
   data,
   edit,
   remove,
+  areButtonsDisabled,
 }: DataTableRowActionsProps<TData>) => {
   const [removeDialogData, setRemoveDialogData] = useState<TData>();
 
@@ -26,7 +27,10 @@ export const DataTableRowActions = <TData,>({
         <DropdownMenu.Portal>
           <DropdownMenu.Content>
             {edit && (
-              <DropdownMenu.Item onSelect={() => edit.onClick?.(data)}>
+              <DropdownMenu.Item
+                onSelect={() => edit.onClick?.(data)}
+                disabled={areButtonsDisabled}
+              >
                 <Icon
                   src={Edit2}
                   size="text"
@@ -37,7 +41,10 @@ export const DataTableRowActions = <TData,>({
             )}
 
             {remove && (
-              <DropdownMenu.Item onSelect={() => setRemoveDialogData(data)}>
+              <DropdownMenu.Item
+                onSelect={() => setRemoveDialogData(data)}
+                disabled={areButtonsDisabled}
+              >
                 <Icon
                   src={Trash}
                   size="text"

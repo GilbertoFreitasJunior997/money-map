@@ -27,9 +27,16 @@ export const transactionsTable = pgTable("transactions", {
   createdAt: createdAt(),
   updatedAt: updatedAt(),
 
-  accountId: integer("account_id").references(() => accountsTable.id),
+  accountId: integer("account_id").references(() => accountsTable.id, {
+    onUpdate: "set null",
+    onDelete: "set null",
+  }),
   categoryId: integer("category_id").references(
     () => transactionCategoriesTable.id,
+    {
+      onUpdate: "set null",
+      onDelete: "set null",
+    },
   ),
   userId: userId(),
 });

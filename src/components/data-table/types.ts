@@ -1,3 +1,4 @@
+import { QueryKey } from "@/lib/hooks/use-action-query/types";
 import { ActionResult } from "@/lib/types";
 import { ButtonProps } from "../button/types";
 import { DropdownMenuItemProps } from "../dropdown-menu/types";
@@ -13,6 +14,7 @@ export type DataTableRowAction<TData> = Omit<
 export type DataTableEdit<TData> = DataTableRowAction<TData>;
 export type DataTableRemove<TData> = {
   action: (data: TData) => Promise<ActionResult<unknown>>;
+  mutationKey?: QueryKey[];
 };
 
 export type DataTableColumn<TData> = {
@@ -24,6 +26,8 @@ export type DataTableProps<TData> = {
   columns: DataTableColumn<TData>[];
   data: TData[];
 
+  areButtonsDisabled?: boolean;
+  isLoading?: boolean;
   entityName?: string;
   create?: DataTableCreate;
   edit?: DataTableEdit<TData>;

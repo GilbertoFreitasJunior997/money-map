@@ -1,3 +1,4 @@
 export type AccountsFormProps = {
-  onClose: () => void;
+  editAccountId?: number;
+  onSuccess: () => void;
 };

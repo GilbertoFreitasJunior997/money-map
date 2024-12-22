@@ -5,4 +5,5 @@ export type DataTableRowActionsProps<TData> = {
   data: TData;
   edit?: DataTableEdit<TData>;
   remove?: DataTableRemove<TData>;
+  areButtonsDisabled?: boolean;
 };

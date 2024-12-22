@@ -57,7 +57,7 @@ export const createService = <
       return updatedData as TModel;
     },
     delete: async (id: TId) => {
-      const data = await db.delete(table).where(eq(table.id, id)).returning();
+      const [data] = await db.delete(table).where(eq(table.id, id)).returning();
 
       return data as TModel;
     },

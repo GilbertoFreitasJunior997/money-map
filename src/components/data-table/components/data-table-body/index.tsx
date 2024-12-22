@@ -2,13 +2,43 @@ import { flexRender } from "@tanstack/react-table";
 import { Table } from "../table";
 import { DataTableBodyProps } from "./types";
 
+type BodyFragmentProps = {
+  colSpan: number;
+};
+const Loading = ({ colSpan }: BodyFragmentProps) => (
+  <Table.Row>
+    <Table.Cell
+      colSpan={colSpan}
+      className="text-center"
+    >
+      Loading...
+    </Table.Cell>
+  </Table.Row>
+);
+
+const NoResults = ({ colSpan }: BodyFragmentProps) => (
+  <Table.Row>
+    <Table.Cell
+      colSpan={colSpan}
+      className="text-center"
+    >
+      No results.
+    </Table.Cell>
+  </Table.Row>
+);
+
 export const DataTableBody = <TData, TValue>({
   table,
   columns,
+  isLoading,
 }: DataTableBodyProps<TData, TValue>) => {
+  const hasData = !!table.getRowModel().rows?.length;
+
   return (
     <Table.Body>
-      {table.getRowModel().rows?.length ? (
+      {isLoading ? (
+        <Loading colSpan={columns.length} />
+      ) : hasData ? (
         table.getRowModel().rows.map((row) => (
           <Table.Row
             key={row.id}
@@ -22,14 +52,7 @@ export const DataTableBody = <TData, TValue>({
           </Table.Row>
         ))
       ) : (
-        <Table.Row>
-          <Table.Cell
-            colSpan={columns.length}
-            className="text-center"
-          >
-            No results.
-          </Table.Cell>
-        </Table.Row>
+        <NoResults colSpan={columns.length} />
       )}
     </Table.Body>
   );

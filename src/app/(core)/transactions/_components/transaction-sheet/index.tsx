@@ -20,6 +20,9 @@ export const TransactionSheet = ({
         <Sheet.Title>
           {editTransactionId ? "Edit" : "New"} Transaction
         </Sheet.Title>
+        <Sheet.Description>
+          Enter the transaction you'd like to record
+        </Sheet.Description>
 
         <TransactionsForm
           editTransactionId={editTransactionId}

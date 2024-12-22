@@ -27,6 +27,8 @@ import { DataTableProps } from "./types";
 export const DataTable = <TData, TValue>({
   data,
   columns: baseColumns,
+  isLoading,
+  areButtonsDisabled,
   entityName,
   edit,
   create,
@@ -60,6 +62,7 @@ export const DataTable = <TData, TValue>({
             edit={edit}
             remove={remove}
             data={row.original}
+            areButtonsDisabled={areButtonsDisabled}
           />
         ),
         enableGlobalFilter: false,
@@ -70,7 +73,7 @@ export const DataTable = <TData, TValue>({
     }
 
     return columns;
-  }, [baseColumns, edit, remove, entityName]);
+  }, [baseColumns, edit, remove, entityName, areButtonsDisabled]);
 
   const table = useReactTable({
     data,
@@ -98,6 +101,7 @@ export const DataTable = <TData, TValue>({
           table={table}
           create={create}
           entityName={entityName}
+          areButtonsDisabled={areButtonsDisabled}
         />
 
         <div className="rounded-md border grow">
@@ -107,6 +111,7 @@ export const DataTable = <TData, TValue>({
             <DataTableBody
               table={table}
               columns={columns}
+              isLoading={isLoading}
             />
           </Table.Root>
         </div>
