@@ -18,7 +18,7 @@ export const TransactionList = ({
   isFetching,
 }: TransactionListProps) => {
   const queryClient = useQueryClient();
-  const isRemovingTransactions = !!queryClient.isMutating({
+  const isMutating = !!queryClient.isMutating({
     mutationKey: ["transactions"],
   });
 
@@ -71,7 +71,7 @@ export const TransactionList = ({
     setSelectedFilter("all");
   };
 
-  const areButtonsDisabled = isFetching || isRemovingTransactions;
+  const areButtonsDisabled = isFetching || isMutating;
 
   return (
     <>

@@ -14,6 +14,7 @@ export const DataTableDeleteDialog = <TData,>({
   const { mutate, isPending } = useActionMutation({
     action: remove.action,
     onSuccess: () => setData(undefined),
+    mutationKey: remove.mutationKey,
   });
 
   return (
@@ -22,8 +23,10 @@ export const DataTableDeleteDialog = <TData,>({
       onOpenChange={() => setData(undefined)}
     >
       <Dialog.Content className="w-[350px]">
-        <Dialog.Title>Remove {entityName ?? ""}</Dialog.Title>
-        <p className="pt-2 pb-4">This action cannot be undone!</p>
+        <Dialog.Title>Are you sure?</Dialog.Title>
+        <Dialog.Description>
+          You are about to delete this {entityName ?? ""}
+        </Dialog.Description>
         <Dialog.Footer>
           <Dialog.Close asChild>
             <Button

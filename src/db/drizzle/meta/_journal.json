@@ -15,6 +15,20 @@
       "when": 1734743552829,
       "tag": "0001_omniscient_harrier",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1734829563761,
+      "tag": "0002_red_kingpin",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1734835303908,
+      "tag": "0003_bent_star_brand",
+      "breakpoints": true
     }
   ]
 }

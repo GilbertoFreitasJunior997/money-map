@@ -2,27 +2,23 @@
 
 import { checkUser } from "@/lib/session";
 import { ActionResult } from "@/lib/types";
-import { Account, AccountListData } from "@/models/account.model";
+import {
+  Account,
+  AccountInsert,
+  AccountListData,
+} from "@/models/account.model";
 import { accountService } from "@/services/account";
-import { revalidatePath } from "next/cache";
 import { AccountsFormSchemaData } from "./_components/accounts-form";
 
-export const createAccount = async (
-  data: AccountsFormSchemaData,
-): Promise<ActionResult<Account>> => {
+export const getAccountListData = async (): Promise<
+  ActionResult<AccountListData[]>
+> => {
   try {
-    const user = await checkUser();
+    const data = await accountService.getListData();
 
-    const newAccount = await accountService.create({
-      name: data.name,
-      userId: user.id,
-    });
-
-    revalidatePath("/accounts");
     return {
       success: true,
-      data: newAccount,
-      message: "Account created",
+      data,
     };
   } catch (error) {
     return {
@@ -32,16 +28,61 @@ export const createAccount = async (
   }
 };
 
-export const removeAccount = async ({
-  id,
-}: AccountListData): Promise<ActionResult> => {
+export const upsertAccount = async (
+  id: number | undefined,
+  data: AccountsFormSchemaData,
+): Promise<ActionResult<Account>> => {
+  try {
+    const user = await checkUser();
+
+    const accountInsert: AccountInsert = {
+      name: data.name,
+      userId: user.id,
+    };
+
+    const account = id
+      ? await accountService.update(id, accountInsert)
+      : await accountService.create(accountInsert);
+
+    return {
+      success: true,
+      data: account,
+      message: `Account ${id ? "updated" : "created"}`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error,
+    };
+  }
+};
+
+export const getAccountEditData = async (
+  id: number,
+): Promise<ActionResult<AccountsFormSchemaData>> => {
+  try {
+    const account = await accountService.getEditData(id);
+
+    return {
+      success: true,
+      data: account,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error,
+    };
+  }
+};
+
+export const removeAccount = async (id: number): Promise<ActionResult> => {
   try {
     await accountService.delete(id);
 
-    revalidatePath("/accounts");
     return {
       success: true,
       data: undefined,
+      message: "Account removed",
     };
   } catch (error) {
     return {
