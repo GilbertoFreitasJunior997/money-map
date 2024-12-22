@@ -34,14 +34,11 @@ export const Calendar = ({
           ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
           : "[&:has([aria-selected])]:rounded-md",
       ),
-      day: cn(
-        buttonVariants({ variant: "ghost" }),
-        "size-8 p-0 font-normal aria-selected:opacity-100",
-      ),
-      range_start: "day-range-start",
+      day: cn(buttonVariants({ variant: "ghost" }), "size-8"),
+      range_start: "day-range-start rounded-none rounded-s-md",
       range_middle:
-        "aria-selected:bg-accent aria-selected:text-accent-foreground",
-      range_end: "day-range-end",
+        "aria-selected:bg-accent aria-selected:text-accent-foreground rounded-none",
+      range_end: "day-range-end rounded-none rounded-e-md",
       selected:
         "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
       today: "bg-accent text-accent-foreground",

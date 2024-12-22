@@ -35,7 +35,7 @@ export const AccountsForm = ({
   const { data: editAccount, isFetching: isFetchingEditAccount } =
     useActionQuery({
       action: () => getAccountEditData(editAccountId as number),
-      queryKey: ["accounts", editAccountId ?? ""],
+      queryKey: ["accounts", "edit", editAccountId ?? ""],
       enabled: !!editAccountId,
     });
 

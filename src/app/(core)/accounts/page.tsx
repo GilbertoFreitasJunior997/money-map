@@ -21,13 +21,13 @@ export default function Page() {
 
   const { data, isLoading, isFetching } = useActionQuery({
     action: getAccountListData,
-    queryKey: ["accounts"],
+    queryKey: ["accounts", "table"],
   });
 
   const handleRemove = async ({ id }: AccountListData) => {
     queryClient.setQueriesData(
       {
-        queryKey: ["accounts"],
+        queryKey: ["accounts", "list"],
       },
       (oldData: AccountListData[] | undefined) => {
         if (!oldData) {

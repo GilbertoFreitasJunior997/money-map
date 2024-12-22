@@ -25,13 +25,13 @@ import { TRANSACTIONS_FORM_ID, transactionsFormTypeItems } from "./consts";
 import { TransactionsFormProps } from "./types";
 
 const transactionsFormSchema = z.object({
-  description: z.string().nullable(),
-  notes: z.string().nullable(),
-  amount: z.number(),
   type: selectBaseItemSchema,
+  amount: z.number(),
   date: z.date(),
-  account: selectBaseItemSchema,
-  category: selectBaseItemSchema,
+  description: z.string().nullable(),
+  category: selectBaseItemSchema.nullable(),
+  account: selectBaseItemSchema.nullable(),
+  notes: z.string().nullable(),
 });
 export type TransactionsFormSchemaData = z.infer<typeof transactionsFormSchema>;
 
@@ -68,7 +68,7 @@ export const TransactionsForm = ({
   const { data: editTransaction, isFetching: isFetchingEditTransaction } =
     useActionQuery({
       action: () => getTransactionEditData(editTransactionId as number),
-      queryKey: ["transactions", editTransactionId ?? ""],
+      queryKey: ["transactions", "edit", editTransactionId ?? ""],
       enabled: !!editTransactionId,
     });
 
@@ -82,12 +82,12 @@ export const TransactionsForm = ({
 
   const { data: categories, isLoading: isLoadingCategories } = useActionQuery({
     action: getTransactionFormTransactionCategories,
-    queryKey: ["transactionCategories"],
+    queryKey: ["transactionCategories", "select"],
   });
 
   const { data: accounts, isLoading: isLoadingAccounts } = useActionQuery({
     action: getTransactionFormAccounts,
-    queryKey: ["accounts"],
+    queryKey: ["accounts", "select"],
   });
 
   return (
