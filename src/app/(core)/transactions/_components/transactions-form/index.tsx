@@ -28,10 +28,10 @@ const transactionsFormSchema = z.object({
   type: selectBaseItemSchema,
   amount: z.number(),
   date: z.date(),
-  description: z.string().nullable(),
-  category: selectBaseItemSchema.nullable(),
-  account: selectBaseItemSchema.nullable(),
-  notes: z.string().nullable(),
+  description: z.string().nullish(),
+  category: selectBaseItemSchema.nullish(),
+  account: selectBaseItemSchema.nullish(),
+  notes: z.string().nullish(),
 });
 export type TransactionsFormSchemaData = z.infer<typeof transactionsFormSchema>;
 

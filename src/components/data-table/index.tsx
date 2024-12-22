@@ -33,6 +33,7 @@ export const DataTable = <TData, TValue>({
   edit,
   create,
   remove,
+  bulkRemove,
 }: DataTableProps<TData>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -102,6 +103,7 @@ export const DataTable = <TData, TValue>({
           create={create}
           entityName={entityName}
           areButtonsDisabled={areButtonsDisabled}
+          bulkRemove={bulkRemove}
         />
 
         <div className="rounded-md border grow">

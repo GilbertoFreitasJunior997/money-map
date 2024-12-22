@@ -91,3 +91,25 @@ export const removeAccount = async (id: number): Promise<ActionResult> => {
     };
   }
 };
+
+export const removeAccountBulk = async (
+  ids: number[],
+): Promise<ActionResult> => {
+  try {
+    await accountService.deleteBulk(ids);
+
+    const message =
+      ids.length > 1 ? `${ids.length} accounts removed` : "Account removed";
+
+    return {
+      success: true,
+      data: undefined,
+      message,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error,
+    };
+  }
+};

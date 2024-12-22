@@ -6,7 +6,11 @@ import { AccountListData } from "@/models/account.model";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { AccountsSheet } from "./_components/accounts-sheet";
-import { getAccountListData, removeAccount } from "./actions";
+import {
+  getAccountListData,
+  removeAccount,
+  removeAccountBulk,
+} from "./actions";
 import { accountsDataTableColumns } from "./consts";
 
 export default function Page() {
@@ -39,6 +43,32 @@ export default function Page() {
     );
 
     const result = await removeAccount(id);
+
+    queryClient.invalidateQueries({
+      queryKey: ["accounts"],
+      exact: false,
+    });
+
+    return result;
+  };
+
+  const handleBulkRemove = async (selectedRows: AccountListData[]) => {
+    const ids = selectedRows.map((row) => row.id);
+
+    queryClient.setQueriesData(
+      {
+        queryKey: ["accounts", "table"],
+      },
+      (oldData: AccountListData[] | undefined) => {
+        if (!oldData) {
+          return oldData;
+        }
+
+        return oldData.filter((account) => !ids.includes(account.id));
+      },
+    );
+
+    const result = await removeAccountBulk(ids);
 
     queryClient.invalidateQueries({
       queryKey: ["accounts"],
@@ -81,6 +111,10 @@ export default function Page() {
         }}
         edit={{
           onClick: ({ id }) => handleOpenEditSheet(id),
+        }}
+        bulkRemove={{
+          action: handleBulkRemove,
+          mutationKey: ["accounts"],
         }}
         remove={{
           action: handleRemove,

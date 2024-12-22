@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { eq, getTableColumns } from "drizzle-orm";
+import { eq, getTableColumns, inArray } from "drizzle-orm";
 import { BaseService, BaseTable } from "./types";
 
 export const createService = <
@@ -15,7 +15,7 @@ export const createService = <
 
       return newRecord as TModel;
     },
-    createMany: async (data: TInsert[]) => {
+    createBulk: async (data: TInsert[]) => {
       const newRecords = await db.insert(table).values(data).returning();
 
       return newRecords as TModel[];
@@ -60,6 +60,14 @@ export const createService = <
       const [data] = await db.delete(table).where(eq(table.id, id)).returning();
 
       return data as TModel;
+    },
+    deleteBulk: async (ids: TId[]) => {
+      const data = await db
+        .delete(table)
+        .where(inArray(table.id, ids))
+        .returning();
+
+      return data as TModel[];
     },
   };
 };

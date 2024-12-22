@@ -16,6 +16,10 @@ export type DataTableRemove<TData> = {
   action: (data: TData) => Promise<ActionResult<unknown>>;
   mutationKey?: QueryKey[];
 };
+export type DataTableBulkRemove<TData> = {
+  action: (data: TData[]) => Promise<ActionResult<unknown>>;
+  mutationKey?: QueryKey[];
+};
 
 export type DataTableColumn<TData> = {
   label?: string;
@@ -32,4 +36,5 @@ export type DataTableProps<TData> = {
   create?: DataTableCreate;
   edit?: DataTableEdit<TData>;
   remove?: DataTableRemove<TData>;
+  bulkRemove?: DataTableBulkRemove<TData>;
 };

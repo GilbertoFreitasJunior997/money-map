@@ -26,11 +26,11 @@ export const seedNewUser = async (userId: number) => {
       name,
       userId,
     }));
-  await transactionCategoryService.createMany(insertTransactionCategories);
+  await transactionCategoryService.createBulk(insertTransactionCategories);
 
   const insertAccounts: AccountInsert[] = accounts.map((name) => ({
     name,
     userId,
   }));
-  await accountService.createMany(insertAccounts);
+  await accountService.createBulk(insertAccounts);
 };

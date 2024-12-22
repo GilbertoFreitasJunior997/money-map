@@ -5,7 +5,7 @@ import { Icon } from "@/components/icon";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Edit2, Trash } from "lucide-react";
 import { useState } from "react";
-import { DataTableDeleteDialog } from "../data-table-remove-dialog";
+import { DataTableRemoveDialog } from "../data-table-remove-dialog";
 import { DataTableRowActionsProps } from "./types";
 
 export const DataTableRowActions = <TData,>({
@@ -58,7 +58,7 @@ export const DataTableRowActions = <TData,>({
       </DropdownMenu.Root>
 
       {!!remove && (
-        <DataTableDeleteDialog
+        <DataTableRemoveDialog
           entityName={entityName}
           data={removeDialogData}
           setData={setRemoveDialogData}

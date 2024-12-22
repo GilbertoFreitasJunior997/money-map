@@ -10,7 +10,7 @@ import {
   TransactionInsert,
   TransactionListData,
 } from "@/models/transaction.model";
-import { and, desc, eq, gte, lt } from "drizzle-orm";
+import { and, desc, eq, gte, lte } from "drizzle-orm";
 import { createService } from "../_base";
 
 const baseService = createService<Transaction, TransactionInsert>(
@@ -39,7 +39,7 @@ export const transactionService = {
         and(
           eq(transactionsTable.userId, user.id),
           gte(transactionsTable.date, periodStart),
-          lt(transactionsTable.date, periodEnd),
+          lte(transactionsTable.date, periodEnd),
         ),
       )
       .leftJoin(

@@ -42,6 +42,7 @@ export const Button = forwardRef<ButtonRef, ButtonProps>(
         )}
         ref={ref}
         disabled={isLoading || disabled}
+        type="button"
         {...props}
       >
         {content}

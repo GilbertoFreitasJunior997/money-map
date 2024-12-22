@@ -3,14 +3,14 @@
 import { Button } from "@/components/button";
 import { Dialog } from "@/components/dialog";
 import { useActionMutation } from "@/lib/hooks/use-action-mutation";
-import { DataTableDeleteDialogProps } from "./types";
+import { DataTableRemoveDialogProps } from "./types";
 
-export const DataTableDeleteDialog = <TData,>({
+export const DataTableRemoveDialog = <TData,>({
   entityName,
   data,
   setData,
   remove,
-}: DataTableDeleteDialogProps<TData>) => {
+}: DataTableRemoveDialogProps<TData>) => {
   const { mutate, isPending } = useActionMutation({
     action: remove.action,
     onSuccess: () => setData(undefined),
