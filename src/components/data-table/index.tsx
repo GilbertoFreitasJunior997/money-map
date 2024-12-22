@@ -3,6 +3,7 @@
 import {
   ColumnDef,
   ColumnFiltersState,
+  PaginationState,
   SortingState,
   VisibilityState,
   getCoreRowModel,
@@ -30,6 +31,7 @@ export const DataTable = <TData, TValue>({
   isLoading,
   areButtonsDisabled,
   entityName,
+  entityNamePlural,
   edit,
   create,
   remove,
@@ -39,6 +41,10 @@ export const DataTable = <TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 25,
+  });
 
   const columns = useMemo(() => {
     const columns: ColumnDef<TData, TValue>[] = [
@@ -87,11 +93,13 @@ export const DataTable = <TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination,
     },
   });
 
@@ -102,6 +110,7 @@ export const DataTable = <TData, TValue>({
           table={table}
           create={create}
           entityName={entityName}
+          entityNamePlural={entityNamePlural}
           areButtonsDisabled={areButtonsDisabled}
           bulkRemove={bulkRemove}
         />

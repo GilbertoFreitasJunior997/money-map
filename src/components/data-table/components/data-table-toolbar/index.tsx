@@ -12,6 +12,7 @@ export const DataTableToolbar = <TData,>({
   table,
   create,
   entityName,
+  entityNamePlural,
   areButtonsDisabled,
   bulkRemove,
 }: DataTableToolbarProps<TData>) => {
@@ -61,7 +62,8 @@ export const DataTableToolbar = <TData,>({
           isOpen={isBulkRemoveDialogOpen && !!selectedRows.length}
           selectedRows={selectedRows}
           bulkRemove={bulkRemove}
-          entityName={entityName ?? "items"}
+          entityName={entityName ?? "item"}
+          entityNamePlural={entityNamePlural ?? "items"}
           onClose={handleCloseBulkRemoveDialog}
           onSuccess={handleSuccessBulkRemove}
         />

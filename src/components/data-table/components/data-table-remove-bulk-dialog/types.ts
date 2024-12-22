@@ -7,4 +7,5 @@ export type DataTableRemoveBulkDialogProps<TData> = {
   selectedRows: TData[];
   bulkRemove: DataTableBulkRemove<TData>;
   entityName: string;
+  entityNamePlural: string;
 };

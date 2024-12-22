@@ -33,6 +33,7 @@ export type DataTableProps<TData> = {
   areButtonsDisabled?: boolean;
   isLoading?: boolean;
   entityName?: string;
+  entityNamePlural?: string;
   create?: DataTableCreate;
   edit?: DataTableEdit<TData>;
   remove?: DataTableRemove<TData>;

@@ -10,6 +10,7 @@ export const DataTableRemoveBulkDialog = <TData,>({
   selectedRows,
   bulkRemove,
   entityName,
+  entityNamePlural,
 }: DataTableRemoveBulkDialogProps<TData>) => {
   const { mutate, isPending } = useActionMutation({
     action: bulkRemove.action,
@@ -29,7 +30,8 @@ export const DataTableRemoveBulkDialog = <TData,>({
             <>You are about to delete this {entityName}</>
           ) : (
             <>
-              You are about to delete {selectedRows.length} {entityName}s
+              You are about to delete {selectedRows.length}{" "}
+              {entityNamePlural.toLowerCase()}
             </>
           )}
         </Dialog.Description>
