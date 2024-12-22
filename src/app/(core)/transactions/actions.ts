@@ -13,14 +13,26 @@ import {
 import { accountService } from "@/services/account";
 import { transactionService } from "@/services/transaction";
 import { transactionCategoryService } from "@/services/transaction-category";
+import { DateRange } from "react-day-picker";
 import { TransactionsFormSchemaData } from "./_components/transactions-form";
 
 export const getTransactionListData = async (
-  periodStart: Date,
-  periodEnd: Date,
+  range: DateRange,
 ): Promise<ActionResult<TransactionListData[]>> => {
   try {
-    const data = await transactionService.getListData(periodStart, periodEnd);
+    if (!range.from || !range.to) {
+      return {
+        success: false,
+        error: "Invalid date range",
+      };
+    }
+
+    if (range.from.getTime() === range.to.getTime()) {
+      range.to = new Date(range.from.getTime());
+      range.to.setDate(range.to.getDate() + 1);
+    }
+
+    const data = await transactionService.getListData(range.from, range.to);
 
     return {
       success: true,
@@ -50,8 +62,8 @@ export const upsertTransaction = async (
     const transactionInsert: TransactionInsert = {
       amount: data.amount.toString(),
       type: type,
-      accountId: data.account.id,
-      categoryId: data.category.id,
+      accountId: data.account?.id,
+      categoryId: data.category?.id,
       date: new Date(data.date),
       description: data.description,
       notes: data.notes,
