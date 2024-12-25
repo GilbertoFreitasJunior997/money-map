@@ -10,6 +10,7 @@ export const SelectInput = <
   TForm extends FieldValues,
 >({
   items: preItems,
+  itemRender,
   value,
   onChange,
   placeholder,
@@ -44,7 +45,9 @@ export const SelectInput = <
           onValueChange={handleChange}
         >
           <Select.Trigger className={className}>
-            <Select.Value placeholder={placeholder} />
+            <Select.Value placeholder={placeholder}>
+              {itemRender && value ? itemRender(value) : (value?.label ?? null)}
+            </Select.Value>
           </Select.Trigger>
           <Select.Content>
             {isLoading && (
@@ -59,7 +62,7 @@ export const SelectInput = <
                   key={item.id}
                   value={String(item.id)}
                 >
-                  {item.label}
+                  {itemRender ? itemRender(item) : item.label}
                 </Select.Item>
               ))}
             </div>
