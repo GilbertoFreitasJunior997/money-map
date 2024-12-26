@@ -6,14 +6,12 @@ import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { SummaryCardList } from "../transactions/_components/summary-card-list";
 import { getTransactionListData } from "../transactions/actions";
+import { getDefaultDateRangeFilter } from "./_components/consts";
 import { SpendingByCategoryGraphs } from "./_components/spending-by-category-graphs";
 import { TransactionsByDateGraphs } from "./_components/transactions-by-date-graph";
 
 export default function Page() {
-  const [period, setPeriod] = useState<DateRange>({
-    from: new Date(new Date().setMonth(new Date().getMonth() - 1)),
-    to: new Date(),
-  });
+  const [period, setPeriod] = useState<DateRange>(getDefaultDateRangeFilter());
 
   const { data: transactions, isLoading } = useActionQuery({
     action: () => getTransactionListData(period),

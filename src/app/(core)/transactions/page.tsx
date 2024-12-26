@@ -4,16 +4,13 @@ import { DateRangeInput } from "@/components/date-range-input";
 import { useActionQuery } from "@/lib/hooks/use-action-query";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { SummaryCardList } from "./_components/summary-card-list";
+import { getDefaultDateRangeFilter } from "../(dashboard)/_components/consts";
 import { TransactionList } from "./_components/transaction-list";
 import { TransactionListLoading } from "./_components/transaction-list-loading";
 import { getTransactionListData } from "./actions";
 
 export default function Page() {
-  const [period, setPeriod] = useState<DateRange>({
-    from: new Date(new Date().setMonth(new Date().getMonth() - 1)),
-    to: new Date(),
-  });
+  const [period, setPeriod] = useState<DateRange>(getDefaultDateRangeFilter());
 
   const {
     data: transactions,
@@ -30,10 +27,6 @@ export default function Page() {
         name="period-filter"
         value={period}
         onChange={setPeriod}
-      />
-      <SummaryCardList
-        transactions={transactions}
-        isLoading={isLoading}
       />
 
       <div className="py-6">
