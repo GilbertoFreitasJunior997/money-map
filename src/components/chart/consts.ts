@@ -7,3 +7,10 @@ export const chartColors = [
   "hsl(var(--chart-4))",
   "hsl(var(--chart-5))",
 ];
+
+export const chartMargin = {
+  top: 5,
+  right: 30,
+  left: 20,
+  bottom: 5,
+};

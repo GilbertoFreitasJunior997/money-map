@@ -39,7 +39,12 @@ export const DashboardChartContainer = <
       </Card.Header>
 
       <Card.Content className="min-h-[200px]">
-        <Chart.Container config={{}}>{children}</Chart.Container>
+        <Chart.Container
+          config={{}}
+          className="min-h-[200px] w-full"
+        >
+          {children}
+        </Chart.Container>
       </Card.Content>
     </Card.Root>
   );

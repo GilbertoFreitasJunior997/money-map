@@ -16,9 +16,3 @@ export type ChartConfig = {
 export type ChartContextProps = {
   config: ChartConfig;
 };
-
-export type ChartBaseData = {
-  name: string;
-  amount: number;
-  fill?: string;
-};

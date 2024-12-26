@@ -1,8 +1,7 @@
 "use client";
 
 import { Chart } from "@/components/chart";
-import { chartColors } from "@/components/chart/consts";
-import { ChartBaseData } from "@/components/chart/types";
+import { chartColors, chartMargin } from "@/components/chart/consts";
 import { useMemo, useState } from "react";
 import {
   Bar,
@@ -16,10 +15,14 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { dashboardChartCurrencyFormatter } from "../consts";
 import { DashboardChartContainer } from "../dashboard-chart-container";
 import { DashboardGraphProps } from "../types";
 import { spendingByCategoryGraphsOptions } from "./consts";
-import { SpendingByCategoryGraphsOption } from "./types";
+import {
+  SpendingByCategoryGraphData,
+  SpendingByCategoryGraphsOption,
+} from "./types";
 
 export const SpendingByCategoryGraphs = ({
   transactions,
@@ -35,10 +38,13 @@ export const SpendingByCategoryGraphs = ({
       return [];
     }
 
-    const chartData: ChartBaseData[] = [];
+    const chartData: SpendingByCategoryGraphData[] = [];
 
     for (let index = 0; index < transactions.length; index++) {
       const transaction = transactions[index];
+      if (transaction.type !== "expense" && transaction.type !== "transfer") {
+        continue;
+      }
 
       const category = transaction.category ?? "Others";
       const amount = Number.parseFloat(transaction.amount);
@@ -69,13 +75,16 @@ export const SpendingByCategoryGraphs = ({
         <BarChart
           accessibilityLayer
           data={chartData}
+          margin={chartMargin}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Chart.Tooltip
             content={
-              <Chart.TooltipContent formatter={(value) => `$${value}`} />
+              <Chart.TooltipContent
+                formatter={dashboardChartCurrencyFormatter}
+              />
             }
           />
 
@@ -102,7 +111,7 @@ export const SpendingByCategoryGraphs = ({
             content={
               <Chart.TooltipContent
                 labelKey="name"
-                valueFormatter={(value) => `$${value}`}
+                valueFormatter={dashboardChartCurrencyFormatter}
               />
             }
           />
@@ -119,7 +128,7 @@ export const SpendingByCategoryGraphs = ({
             label={{
               position: "outside",
               fill: "#fff",
-              formatter: (value: number) => `$${value}`,
+              formatter: dashboardChartCurrencyFormatter,
             }}
             name="Amount"
             dataKey="amount"

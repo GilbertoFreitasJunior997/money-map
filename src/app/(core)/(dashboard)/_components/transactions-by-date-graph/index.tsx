@@ -2,22 +2,50 @@
 
 import { sumTransactionsValues } from "@/app/(core)/transactions/_components/summary-card-list/utils";
 import { Chart } from "@/components/chart";
+import { chartMargin } from "@/components/chart/consts";
 import { useCallback, useMemo, useState } from "react";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { dashboardChartCurrencyFormatter } from "../consts";
 import { DashboardChartContainer } from "../dashboard-chart-container";
 import { transactionsByDateGraphsOptions } from "./consts";
 import {
+  TransactionByDateChartData,
   TransactionsByDateGraphProps,
   TransactionsByDateGraphsOption,
 } from "./types";
 
-type ChartBaseData = {
-  date: string;
-  total: number;
-  income: number;
-  expenses: number;
-  transfers: number;
-};
+const chartItems = [
+  {
+    dataKey: "total",
+    name: "Total",
+    stroke: "hsl(var(--accent-foreground))",
+  },
+  {
+    dataKey: "income",
+    name: "Income",
+    stroke: "hsl(var(--primary))",
+  },
+  {
+    dataKey: "expenses",
+    name: "Expenses",
+    stroke: "hsl(var(--destructive))",
+  },
+  {
+    dataKey: "transfers",
+    name: "Transfers",
+    stroke: "hsl(var(--chart-1))",
+  },
+];
 
 export const TransactionsByDateGraphs = ({
   transactions,
@@ -38,12 +66,22 @@ export const TransactionsByDateGraphs = ({
     [],
   );
 
+  const formatDateToLabel = useCallback(
+    (date: Date) =>
+      date.toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "2-digit",
+      }),
+    [],
+  );
+
   const chartData = useMemo(() => {
     if (isLoading || !transactions || !period.from || !period.to) {
       return [];
     }
 
-    const chartData: ChartBaseData[] = [];
+    const chartData: TransactionByDateChartData[] = [];
 
     const currentDate = new Date(period.from);
     while (currentDate <= period.to) {
@@ -54,11 +92,14 @@ export const TransactionsByDateGraphs = ({
         (transaction) => {
           const transactionFormattedDate = formatDate(transaction.date);
 
-          return transactionFormattedDate !== formattedDate;
+          return transactionFormattedDate === formattedDate;
         },
       );
 
+      const label = formatDateToLabel(currentDate);
+
       chartData.push({
+        label,
         date: formattedDate,
         total,
         income,
@@ -70,7 +111,7 @@ export const TransactionsByDateGraphs = ({
     }
 
     return chartData;
-  }, [transactions, isLoading, period, formatDate]);
+  }, [transactions, isLoading, period, formatDate, formatDateToLabel]);
 
   return (
     <DashboardChartContainer
@@ -79,60 +120,99 @@ export const TransactionsByDateGraphs = ({
       selectedGraph={selectedGraph}
       setSelectedGraph={setSelectedGraph}
     >
-      <AreaChart
-        data={chartData}
-        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-      >
-        <XAxis dataKey="date" />
-        <YAxis dataKey="total" />
-        <CartesianGrid strokeDasharray="3 3" />
+      {selectedGraph.label === "Area Chart" ? (
+        <AreaChart
+          data={chartData}
+          margin={chartMargin}
+        >
+          <XAxis dataKey="date" />
+          <YAxis dataKey="total" />
+          <CartesianGrid strokeDasharray="3 3" />
 
-        <Chart.Tooltip
-          content={
-            <Chart.TooltipContent
-              labelKey="name"
-              valueFormatter={(value) => `$${value}`}
+          <Chart.Tooltip
+            content={
+              <Chart.TooltipContent
+                labelFormatter={(label, payload) =>
+                  payload?.[0]?.payload?.label ?? label
+                }
+                valueFormatter={dashboardChartCurrencyFormatter}
+              />
+            }
+          />
+          <Chart.Legend />
+
+          {chartItems.map((item) => (
+            <Area
+              key={item.dataKey}
+              {...item}
+              type="monotone"
+              fillOpacity={1}
+              fill="url(#colorUv)"
             />
-          }
-        />
-        <Chart.Legend />
+          ))}
+        </AreaChart>
+      ) : selectedGraph.label === "Bar Chart" ? (
+        <BarChart
+          accessibilityLayer
+          data={chartData}
+          margin={chartMargin}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis dataKey="total" />
 
-        <Area
-          type="monotone"
-          dataKey="total"
-          stroke="hsl(var(--accent-foreground))"
-          fillOpacity={1}
-          fill="url(#colorUv)"
-        />
-        <Area
-          type="monotone"
-          dataKey="income"
-          stroke="hsl(var(--primary))"
-          fillOpacity={1}
-          fill="url(#colorUv)"
-        />
-        <Area
-          type="monotone"
-          dataKey="expenses"
-          stroke="hsl(var(--destructive))"
-          fillOpacity={1}
-          fill="url(#colorUv)"
-        />
-        <Area
-          type="monotone"
-          dataKey="transfers"
-          stroke="hsl(var(--chart-1))"
-          fillOpacity={1}
-          fill="url(#colorUv)"
-        />
-        {/* <Area
-          type="monotone"
-          dataKey="pv"
-          stroke="#82ca9d"
-          fillOpacity={1}
-          fill="url(#colorPv)"
-        /> */}
-      </AreaChart>
+          <Chart.Tooltip
+            content={
+              <Chart.TooltipContent
+                labelFormatter={(label, payload) =>
+                  payload?.[0]?.payload?.label ?? label
+                }
+                valueFormatter={dashboardChartCurrencyFormatter}
+              />
+            }
+          />
+          <Chart.Legend />
+
+          {chartItems.map((item) => (
+            <Bar
+              key={item.dataKey}
+              {...item}
+              legendType="circle"
+              fill={item.stroke}
+            />
+          ))}
+        </BarChart>
+      ) : (
+        <LineChart
+          data={chartData}
+          margin={chartMargin}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Chart.Tooltip
+            content={
+              <Chart.TooltipContent
+                labelFormatter={(label, payload) =>
+                  payload?.[0]?.payload?.label ?? label
+                }
+                valueFormatter={dashboardChartCurrencyFormatter}
+              />
+            }
+          />
+          <Chart.Legend />
+
+          {chartItems.map((item) => (
+            <Line
+              type="monotone"
+              key={item.dataKey}
+              {...item}
+              legendType="circle"
+              fill={item.stroke}
+            />
+          ))}
+        </LineChart>
+      )}
     </DashboardChartContainer>
   );
 };

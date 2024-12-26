@@ -127,7 +127,7 @@ const TooltipContent = forwardRef<
       hideIndicator = false,
       label,
       labelFormatter,
-      labelClassName,
+      labelClassName: baseLabelClassName,
       formatter,
       color,
       nameKey,
@@ -151,11 +151,13 @@ const TooltipContent = forwardRef<
           ? config[label as keyof typeof config]?.label || label
           : itemConfig?.label;
 
+      const labelClassName = cn(
+        "font-medium border-b pb-1",
+        baseLabelClassName,
+      );
       if (labelFormatter) {
         return (
-          <div className={cn("font-medium", labelClassName)}>
-            {labelFormatter(value, payload)}
-          </div>
+          <div className={labelClassName}>{labelFormatter(value, payload)}</div>
         );
       }
 
@@ -163,13 +165,13 @@ const TooltipContent = forwardRef<
         return null;
       }
 
-      return <div className={cn("font-medium", labelClassName)}>{value}</div>;
+      return <div className={labelClassName}>{value}</div>;
     }, [
       label,
       labelFormatter,
       payload,
       hideLabel,
-      labelClassName,
+      baseLabelClassName,
       config,
       labelKey,
     ]);
