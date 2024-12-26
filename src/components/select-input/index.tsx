@@ -20,8 +20,8 @@ export const SelectInput = <
 }: SelectInputProps<TItem, TForm>) => (
   <FormInputBase {...formProps}>
     {({ field }) => {
-      const baseValue = formProps.form ? field?.value?.id : value?.id;
-      const selectedValue = baseValue ? String(baseValue) : undefined;
+      const baseItem = formProps.form ? field?.value : value;
+      const selectedValue = baseItem ? String(baseItem.id) : undefined;
 
       const items =
         formProps.form && field?.value && isLoading
@@ -46,7 +46,9 @@ export const SelectInput = <
         >
           <Select.Trigger className={className}>
             <Select.Value placeholder={placeholder}>
-              {itemRender && value ? itemRender(value) : (value?.label ?? null)}
+              {itemRender && value
+                ? itemRender(value)
+                : (baseItem?.label ?? null)}
             </Select.Value>
           </Select.Trigger>
           <Select.Content>
