@@ -16,9 +16,10 @@ export const DataTableToolbar = <TData,>({
   areButtonsDisabled,
   bulkRemove,
 }: DataTableToolbarProps<TData>) => {
-  const selectedRows = table
-    .getSelectedRowModel()
-    .rows.map((row) => row.original);
+  const selectedRows =
+    table.getIsSomeRowsSelected() || table.getIsAllRowsSelected()
+      ? table.getSelectedRowModel().rows.map((row) => row.original)
+      : [];
 
   const [isBulkRemoveDialogOpen, setIsBulkRemoveDialogOpen] = useState(false);
 
