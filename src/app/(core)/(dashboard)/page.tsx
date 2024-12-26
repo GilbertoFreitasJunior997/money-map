@@ -7,6 +7,7 @@ import { DateRange } from "react-day-picker";
 import { SummaryCardList } from "../transactions/_components/summary-card-list";
 import { getTransactionListData } from "../transactions/actions";
 import { SpendingByCategoryGraphs } from "./_components/spending-by-category-graphs";
+import { TransactionsByDateGraphs } from "./_components/transactions-by-date-graph";
 
 export default function Page() {
   const [period, setPeriod] = useState<DateRange>({
@@ -30,6 +31,10 @@ export default function Page() {
       <SummaryCardList {...graphsProps} />
       <div className="grid gap-4 grid-cols-1 lg:grid-cols-4">
         <SpendingByCategoryGraphs {...graphsProps} />
+        <TransactionsByDateGraphs
+          period={period}
+          {...graphsProps}
+        />
       </div>
     </div>
   );

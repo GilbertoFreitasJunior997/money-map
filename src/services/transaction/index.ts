@@ -32,6 +32,7 @@ export const transactionService = {
         notes: transactionsTable.notes,
         amount: transactionsTable.amount,
         type: transactionsTable.type,
+        date: transactionsTable.date,
         category: transactionCategoriesTable.name,
       })
       .from(transactionsTable)

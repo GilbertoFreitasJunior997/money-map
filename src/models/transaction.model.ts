@@ -4,7 +4,7 @@ import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 export type Transaction = InferSelectModel<typeof transactionsTable>;
 export type TransactionListData = Pick<
   Transaction,
-  "id" | "description" | "notes" | "amount" | "type"
+  "id" | "description" | "notes" | "amount" | "type" | "date"
 > & {
   category: string | null;
 };
