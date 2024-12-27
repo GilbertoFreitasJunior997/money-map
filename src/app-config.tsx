@@ -1,5 +1,5 @@
 import { DashboardIcon } from "@radix-ui/react-icons";
-import { BoxIcon, Coins, CreditCard, HandCoins } from "lucide-react";
+import { BarChart, BoxIcon, CreditCard, HandCoins } from "lucide-react";
 import { Icon } from "./components/icon";
 import { Route } from "./lib/types";
 
@@ -9,9 +9,9 @@ export const appConfig = {
   redirectSignInURL: "/dashboard",
   brandName,
   logo: (
-    <div className="w-10 h-10 bg-primary text-primary-foreground rounded-full grid place-content-center">
+    <div className="w-10 h-8 text-green-600 dark:text-green-400">
       <Icon
-        src={Coins}
+        src={BarChart}
         className="size-full"
       />
     </div>

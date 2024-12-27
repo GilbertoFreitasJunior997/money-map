@@ -1,33 +1,20 @@
-import Link from "next/link";
-import {
-  MapPin,
-  PieChart,
-  TrendingUp,
-  Shield,
-  BarChart,
-  ArrowRight,
-} from "lucide-react";
 import { Button } from "@/components/button";
 import { Card } from "@/components/card";
-import { getSession } from "@/lib/session";
 import { Icon } from "@/components/icon";
+import { Logo } from "@/components/logo";
+import { getSession } from "@/lib/session";
+import { ArrowRight, MapPin, PieChart, Shield, TrendingUp } from "lucide-react";
+import Link from "next/link";
 
 export default async function Page() {
   const token = await getSession();
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-16 flex items-center border-b">
-        <Link
-          className="flex items-center justify-center"
-          href="#"
-        >
-          <BarChart className="h-8 w-8 text-green-600 dark:text-green-400" />
-          <span className="ml-2 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400">
-            Money Map
-          </span>
-        </Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
+      <header className="px-4 lg:px-6 h-16 flex items-center border-b justify-between">
+        <Logo />
+
+        <nav className="flex gap-4 sm:gap-6">
           {token ? (
             <Link href={"/dashboard"}>
               <Button className="space-x-2">
@@ -36,10 +23,18 @@ export default async function Page() {
               </Button>
             </Link>
           ) : (
-            <div className="flex text-sm items-center gap-4">
-              <Link href={"sign-in"}>Sign in</Link>
+            <div className="flex text-sm items-center gap-2">
+              <Link href={"sign-in"}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                >
+                  Sign In
+                </Button>
+              </Link>
+
               <Link href={"sign-up"}>
-                <Button size={"sm"}>Sign up</Button>
+                <Button size="sm">Sign up</Button>
               </Link>
             </div>
           )}

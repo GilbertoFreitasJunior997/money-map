@@ -59,14 +59,18 @@ export const SelectInput = <
             )}
 
             <div className={cn(isLoading && "hidden")}>
-              {items.map((item) => (
-                <Select.Item
-                  key={item.id}
-                  value={String(item.id)}
-                >
-                  {itemRender ? itemRender(item) : item.label}
-                </Select.Item>
-              ))}
+              {items.length ? (
+                items.map((item) => (
+                  <Select.Item
+                    key={item.id}
+                    value={String(item.id)}
+                  >
+                    {itemRender ? itemRender(item) : item.label}
+                  </Select.Item>
+                ))
+              ) : (
+                <div className="text-sm text-center py-1"> No items </div>
+              )}
             </div>
           </Select.Content>
         </Select.Root>

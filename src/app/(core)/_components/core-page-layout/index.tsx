@@ -5,7 +5,7 @@ import { PageTitle } from "./page-title";
 
 export const CorePageLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="h-dvh flex p-4 pr-0 gap-9">
+    <div className="h-dvh flex p-4 pr-0 gap-9 bg-gradient-to-t from-background light:via-accent via-background to-accent">
       <Sidebar UserNav={<UserNav />} />
 
       <div className="flex flex-col w-full overflow-auto pr-4">

@@ -56,7 +56,7 @@ export const SpendingByCategoryGraphs = ({
         chartData.unshift({
           name: category,
           amount,
-          fill: chartColors[index % chartColors.length],
+          fill: chartColors[(index + 1) % chartColors.length],
         });
       }
     }
@@ -70,6 +70,7 @@ export const SpendingByCategoryGraphs = ({
       items={spendingByCategoryGraphsOptions}
       selectedGraph={selectedGraph}
       setSelectedGraph={setSelectedGraph}
+      isLoading={isLoading}
     >
       {selectedGraph.label === "Bar Chart" ? (
         <BarChart
@@ -91,7 +92,6 @@ export const SpendingByCategoryGraphs = ({
           <Bar
             name="Amount"
             dataKey="amount"
-            fill={chartColors[0]}
             legendType="circle"
             radius={6}
           />

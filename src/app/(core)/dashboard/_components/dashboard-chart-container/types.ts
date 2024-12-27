@@ -14,5 +14,6 @@ export type DashboardChartContainerProps<
   items: TSelectItem[];
   selectedGraph: TSelectItem;
   setSelectedGraph: SetState<TSelectItem>;
+  isLoading: boolean;
   children: ReactNode;
 };

@@ -21,7 +21,7 @@ import {
 
 const Root = forwardRef<TableRootRef, TableRootProps>(
   ({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto h-full">
+    <div className="relative w-full overflow-auto h-full bg-background rounded-md">
       <table
         ref={ref}
         className={cn("w-full caption-bottom text-sm", className)}
@@ -43,14 +43,12 @@ const Header = forwardRef<TableHeaderRef, TableHeaderProps>(
 );
 Header.displayName = "TableHeader";
 
-const Body = forwardRef<TableBodyRef, TableBodyProps>(
-  (props, ref) => (
-    <tbody
-      ref={ref}
-      {...props}
-    />
-  ),
-);
+const Body = forwardRef<TableBodyRef, TableBodyProps>((props, ref) => (
+  <tbody
+    ref={ref}
+    {...props}
+  />
+));
 Body.displayName = "TableBody";
 
 const Footer = forwardRef<TableFooterRef, TableFooterProps>(

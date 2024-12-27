@@ -19,7 +19,7 @@ export const Sidebar = ({ UserNav }: SidebarProps) => {
   return (
     <div
       className={cn(
-        "rounded-xl p-2 flex flex-col justify-between items-center border transition-[width]",
+        "rounded-xl p-2 flex flex-col justify-between items-center border transition-[width] bg-background",
         isOpen ? "md:w-[258px] w-[58px]" : "w-[58px]",
       )}
     >
@@ -27,16 +27,18 @@ export const Sidebar = ({ UserNav }: SidebarProps) => {
         <div className="flex items-center relative">
           <Logo onClick={toggleSidebarOpen} />
 
-          <button
-            type="button"
-            className="hover:bg-muted size-6 grid place-content-center rounded-full absolute right-0 top-1/2 -translate-y-1/2"
-            onClick={toggleSidebarOpen}
-          >
-            <Icon
-              src={CaretLeftIcon}
-              className="size-6"
-            />
-          </button>
+          {isOpen && (
+            <button
+              type="button"
+              className="hover:bg-muted size-6 grid place-content-center rounded-full absolute right-0 top-1/2 -translate-y-1/2"
+              onClick={toggleSidebarOpen}
+            >
+              <Icon
+                src={CaretLeftIcon}
+                className="size-6"
+              />
+            </button>
+          )}
         </div>
 
         <nav className="flex flex-col gap-2">

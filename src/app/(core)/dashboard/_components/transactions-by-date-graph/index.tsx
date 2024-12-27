@@ -119,6 +119,7 @@ export const TransactionsByDateGraphs = ({
       items={transactionsByDateGraphsOptions}
       selectedGraph={selectedGraph}
       setSelectedGraph={setSelectedGraph}
+      isLoading={isLoading}
     >
       {selectedGraph.label === "Area Chart" ? (
         <AreaChart

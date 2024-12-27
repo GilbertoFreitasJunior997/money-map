@@ -21,7 +21,7 @@ export const SocialLoginButtons = () => {
     <>
       <div className="flex flex-col gap-4 pt-4">
         <Button
-          variant="secondary"
+          variant="outline"
           className="gap-2"
           onClick={handleRedirectGithub}
         >
@@ -44,7 +44,7 @@ export const SocialLoginButtons = () => {
           <Separator />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-background">Or</span>
+          <span className="px-2 bg-background rounded-full">Or</span>
         </div>
       </div>
     </>

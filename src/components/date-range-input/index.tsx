@@ -1,17 +1,17 @@
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
+import { fixedForwardRef } from "@/lib/react";
 import { cn } from "@/lib/utils";
-import { Popover } from "../popover";
+import { ForwardedRef } from "react";
+import { DateRange } from "react-day-picker";
+import { FieldValues } from "react-hook-form";
 import { Button } from "../button";
 import { Calendar } from "../calendar";
-import { Icon } from "../icon";
 import { FormInputBase } from "../form/components/form-input-base";
-import { fixedForwardRef } from "@/lib/react";
-import { FieldValues } from "react-hook-form";
-import { ForwardedRef } from "react";
+import { Icon } from "../icon";
+import { Popover } from "../popover";
 import { DateRangeInputProps, DateRangeInputRef } from "./types";
-import { DateRange } from "react-day-picker";
 
 const DateRangeInputBase = <TForm extends FieldValues>(
   {
@@ -56,7 +56,7 @@ const DateRangeInputBase = <TForm extends FieldValues>(
                 id="date"
                 variant={"outline"}
                 className={cn(
-                  "text-center font-normal space-x-2 w-[300px]",
+                  "text-center font-normal space-x-2 w-[300px] hover:bg-background/50",
                   !value && "text-muted-foreground",
                 )}
               >

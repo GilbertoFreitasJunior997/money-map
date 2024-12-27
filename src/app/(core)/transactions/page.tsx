@@ -22,7 +22,7 @@ export default function Page() {
   });
 
   return (
-    <div className="space-y-6 py-2 px-1 sm:px-6 md:px-24">
+    <div className="py-2 px-1 sm:px-6 md:px-24">
       <DateRangeInput
         name="period-filter"
         value={period}

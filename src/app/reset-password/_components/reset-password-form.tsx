@@ -3,10 +3,12 @@
 import { appConfig } from "@/app-config";
 import { Button } from "@/components/button";
 import { Form } from "@/components/form";
+import { Icon } from "@/components/icon";
 import { Input } from "@/components/input";
 import { Separator } from "@/components/separator";
 import { useActionMutation } from "@/lib/hooks/use-action-mutation";
 import { useZodForm } from "@/lib/hooks/use-zod-form";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
 import { resetPassword } from "./actions";
@@ -48,11 +50,14 @@ export const ResetPasswordForm = () => {
       </Button>
 
       <div>
-        <Link
-          href={appConfig.redirectSignInURL}
-          className="font-semibold text-sm border-b border-transparent hover:border-foreground transition-colors"
-        >
-          Go back
+        <Link href={appConfig.redirectSignInURL}>
+          <Button
+            variant="ghost"
+            className="px-2 gap-2 font-normal"
+          >
+            <Icon src={ArrowLeft} />
+            <p>Go back</p>
+          </Button>
         </Link>
       </div>
     </Form>

@@ -128,7 +128,7 @@ export const DataTable = <TData, TValue>({
         </div>
       </div>
 
-      <div className="p-2 rounded-md border">
+      <div className="p-2 rounded-md border bg-background">
         <DataTablePagination table={table} />
       </div>
     </div>
