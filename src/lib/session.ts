@@ -30,7 +30,7 @@ export const getSessionToken = async () => {
   return jar.get(sessionCookieKey)?.value;
 };
 
-const getSession = async () => {
+export const getSession = async () => {
   const token = await getSessionToken();
   if (!token) {
     return;

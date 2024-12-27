@@ -4,7 +4,7 @@ import { DateRangeInput } from "@/components/date-range-input";
 import { useActionQuery } from "@/lib/hooks/use-action-query";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { getDefaultDateRangeFilter } from "../(dashboard)/_components/consts";
+import { getDefaultDateRangeFilter } from "../dashboard/_components/consts";
 import { TransactionList } from "./_components/transaction-list";
 import { TransactionListLoading } from "./_components/transaction-list-loading";
 import { getTransactionListData } from "./actions";

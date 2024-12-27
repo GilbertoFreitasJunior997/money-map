@@ -6,7 +6,7 @@ import { Route } from "./lib/types";
 const brandName = "Money Map";
 
 export const appConfig = {
-  redirectSignInURL: "/",
+  redirectSignInURL: "/dashboard",
   brandName,
   logo: (
     <div className="w-10 h-10 bg-primary text-primary-foreground rounded-full grid place-content-center">
@@ -27,7 +27,7 @@ export const appConfig = {
   routes: [
     {
       name: "Dashboard",
-      path: "/",
+      path: "/dashboard",
       icon: DashboardIcon,
     },
     {
