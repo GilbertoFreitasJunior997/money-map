@@ -75,6 +75,7 @@ export const CategoriesForm = ({
         <Button
           isLoading={isPending}
           form={CATEGORIES_FORM_ID}
+          type="submit"
         >
           Save Category
         </Button>

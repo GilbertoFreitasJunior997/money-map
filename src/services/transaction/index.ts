@@ -89,8 +89,9 @@ export const transactionService = {
       ...dbData,
       amount: Number.parseFloat(dbData.amount),
       type:
-        transactionsFormTypeItems.find((item) => item.label === dbData.type) ||
-        transactionsFormTypeItems[0],
+        transactionsFormTypeItems.find(
+          (item) => item.label.toLowerCase() === dbData.type.toLowerCase(),
+        ) || transactionsFormTypeItems[0],
     } as TransactionsFormSchemaData;
 
     return data;

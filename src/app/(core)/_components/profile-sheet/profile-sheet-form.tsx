@@ -78,6 +78,7 @@ export const ProfileSheetForm = ({ user }: { user: UserAuth }) => {
         <Button
           isLoading={isPending}
           form={PROFILE_SHEET_FORM_ID}
+          type="submit"
         >
           Save
         </Button>

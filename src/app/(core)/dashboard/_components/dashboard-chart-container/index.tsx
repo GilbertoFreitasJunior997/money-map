@@ -2,7 +2,7 @@ import { Card } from "@/components/card";
 import { Chart } from "@/components/chart";
 import { Icon } from "@/components/icon";
 import { SelectInput } from "@/components/select-input";
-import { Loader2Icon } from "lucide-react";
+import { BarChart2, Loader2Icon } from "lucide-react";
 import {
   DashboardChartContainerProps,
   DashboardChartContainerSelectItems,
@@ -16,6 +16,7 @@ export const DashboardChartContainer = <
   selectedGraph,
   setSelectedGraph,
   isLoading,
+  transactions,
   children,
 }: DashboardChartContainerProps<TSelectItem>) => {
   return (
@@ -42,16 +43,29 @@ export const DashboardChartContainer = <
 
       <Card.Content className="min-h-[200px] aspect-video">
         {isLoading ? (
-          <div className="absolute top-1/2 right-1/2">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2">
             <Loader2Icon className="animate-spin" />
           </div>
-        ) : (
+        ) : transactions?.length ? (
           <Chart.Container
             config={{}}
             className="min-h-[200px] w-full"
           >
             {children}
           </Chart.Container>
+        ) : (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2">
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex items-center">
+                <BarChart2 />
+                <p className="text-center font-semibold">No Data</p>
+              </div>
+
+              <p className="text-foreground/60">
+                Go ahead and map your transactions
+              </p>
+            </div>
+          </div>
         )}
       </Card.Content>
     </Card.Root>

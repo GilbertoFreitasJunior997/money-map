@@ -75,6 +75,7 @@ export const AccountsForm = ({
         <Button
           isLoading={isPending}
           form={ACCOUNTS_FORM_ID}
+          type="submit"
         >
           Save Account
         </Button>

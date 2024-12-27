@@ -21,7 +21,7 @@ export const DataTableRowActions = <TData,>({
     <>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
-          <DotsHorizontalIcon className="mx-2" />
+          <DotsHorizontalIcon />
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Portal>
