@@ -1,15 +1,15 @@
-export class AuthGithubError extends Error {
-  message = "This email is associated to a Github account";
-}
+export const authGithubError = {
+  message: "This email is associated to a Github account",
+};
 
-export class AuthGoogleError extends Error {
-  message = "This email is associated to a Google account";
-}
+export const authGoogleError = {
+  message: "This email is associated to a Google account",
+};
 
-export class AuthInvalidDataError extends Error {
-  message = "Incorrect email or password";
-}
+export const authInvalidDataError = {
+  message: "Incorrect email or password",
+};
 
-export class AuthUserNotAuthenticatedError extends Error {
-  message = "User not authenticated";
-}
+export const authUserNotAuthenticatedError = {
+  message: "User not authenticated",
+};

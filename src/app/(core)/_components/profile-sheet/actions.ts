@@ -1,6 +1,6 @@
 "use server";
 
-import { AuthUserNotAuthenticatedError } from "@/app/(auth)/_lib/errors";
+import { authUserNotAuthenticatedError } from "@/app/(auth)/_lib/errors";
 import { getSessionToken, setSession } from "@/lib/session";
 import { ActionResult } from "@/lib/types";
 import { UserAuth } from "@/models/user.model";
@@ -16,7 +16,10 @@ export const updateProfile = async ({
   try {
     const token = await getSessionToken();
     if (!token) {
-      throw new AuthUserNotAuthenticatedError();
+      return {
+        success: false,
+        error: authUserNotAuthenticatedError,
+      };
     }
 
     await userService.update(id, {

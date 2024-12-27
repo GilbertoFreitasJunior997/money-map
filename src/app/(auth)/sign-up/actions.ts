@@ -5,7 +5,7 @@ import { setSession } from "@/lib/session";
 import { ActionResult } from "@/lib/types";
 import { UserAuth } from "@/models/user.model";
 import { userService } from "@/services/user";
-import { AuthGithubError, AuthGoogleError } from "../_lib/errors";
+import { authGithubError, authGoogleError } from "../_lib/errors";
 import { SignUpFormData } from "./sign-up-form";
 
 export const signUp = async ({
@@ -18,21 +18,21 @@ export const signUp = async ({
   if (dbUser?.githubId) {
     return {
       success: false,
-      error: new AuthGithubError(),
+      error: authGithubError,
     };
   }
 
   if (dbUser?.googleId) {
     return {
       success: false,
-      error: new AuthGoogleError(),
+      error: authGoogleError,
     };
   }
 
   if (dbUser) {
     return {
       success: false,
-      error: new Error("Email already in use"),
+      error: { message: "Email already in use!" },
     };
   }
 

@@ -6,9 +6,9 @@ import { ActionResult } from "@/lib/types";
 import { UserAuth } from "@/models/user.model";
 import { userService } from "@/services/user";
 import {
-  AuthGithubError,
-  AuthGoogleError,
-  AuthInvalidDataError,
+  authGithubError,
+  authGoogleError,
+  authInvalidDataError,
 } from "../_lib/errors";
 import { SignInFormData } from "./sign-in-form";
 
@@ -21,28 +21,28 @@ export const signIn = async ({
   if (!dbUser) {
     return {
       success: false,
-      error: new AuthInvalidDataError(),
+      error: authInvalidDataError,
     };
   }
 
   if (dbUser.githubId) {
     return {
       success: false,
-      error: new AuthGithubError(),
+      error: authGithubError,
     };
   }
 
   if (dbUser.googleId) {
     return {
       success: false,
-      error: new AuthGoogleError(),
+      error: authGoogleError,
     };
   }
 
   if (!dbUser.password) {
     return {
       success: false,
-      error: new AuthInvalidDataError(),
+      error: authInvalidDataError,
     };
   }
 
@@ -51,7 +51,7 @@ export const signIn = async ({
   if (!passwordMatches) {
     return {
       success: false,
-      error: new AuthInvalidDataError(),
+      error: authInvalidDataError,
     };
   }
 

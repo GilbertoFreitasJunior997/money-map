@@ -1,7 +1,7 @@
 "use server";
 
 import "server-only";
-import { AuthUserNotAuthenticatedError } from "@/app/(auth)/_lib/errors";
+import { authUserNotAuthenticatedError } from "@/app/(auth)/_lib/errors";
 import { sessionService } from "@/services/session";
 import { userService } from "@/services/user";
 import { cookies } from "next/headers";
@@ -48,12 +48,12 @@ export const checkUser = cache(async () => {
   const session = await getSession();
 
   if (!session) {
-    throw new AuthUserNotAuthenticatedError();
+    throw new Error(authUserNotAuthenticatedError.message);
   }
 
   const preUser = await userService.getById(session.userId);
   if (!preUser) {
-    throw new AuthUserNotAuthenticatedError();
+    throw new Error(authUserNotAuthenticatedError.message);
   }
 
   const { password: _, ...user } = preUser;
