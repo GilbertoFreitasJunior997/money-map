@@ -34,8 +34,13 @@ export const useActionMutation = <TData, TVariables extends unknown[]>({
 
       let errorMessage = "";
 
-      if (result.error instanceof Error) {
-        errorMessage = result.error.message;
+      if (
+        result.error instanceof Error ||
+        (result.error &&
+          typeof result.error === "object" &&
+          "message" in result.error)
+      ) {
+        errorMessage = String(result.error.message);
       } else {
         errorMessage = String(result.error);
       }
