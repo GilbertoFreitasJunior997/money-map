@@ -8,8 +8,6 @@ import {
   BarChart,
   CartesianGrid,
   Legend,
-  Pie,
-  PieChart,
   RadialBar,
   RadialBarChart,
   XAxis,
@@ -71,6 +69,7 @@ export const SpendingByCategoryGraphs = ({
       selectedGraph={selectedGraph}
       setSelectedGraph={setSelectedGraph}
       isLoading={isLoading}
+      transactions={transactions}
     >
       {selectedGraph.label === "Bar Chart" ? (
         <BarChart
@@ -96,27 +95,6 @@ export const SpendingByCategoryGraphs = ({
             radius={6}
           />
         </BarChart>
-      ) : selectedGraph.label === "Pie Chart" ? (
-        <PieChart accessibilityLayer>
-          <Pie
-            name="Amount"
-            dataKey="amount"
-            data={chartData}
-            labelLine={false}
-            outerRadius={80}
-            label
-          />
-
-          <Chart.Tooltip
-            content={
-              <Chart.TooltipContent
-                labelKey="name"
-                valueFormatter={dashboardChartCurrencyFormatter}
-              />
-            }
-          />
-          <Chart.Legend />
-        </PieChart>
       ) : (
         <RadialBarChart
           innerRadius="10%"

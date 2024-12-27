@@ -1,4 +1,4 @@
-import { BarChart, ChartPie, Target } from "lucide-react";
+import { BarChart, Target } from "lucide-react";
 import { DashboardChartContainerSelectItems } from "../dashboard-chart-container/types";
 
 export const spendingByCategoryGraphsOptions = [
@@ -11,10 +11,5 @@ export const spendingByCategoryGraphsOptions = [
     id: 2,
     label: "Radial Chart",
     icon: Target,
-  },
-  {
-    id: 3,
-    label: "Pie Chart",
-    icon: ChartPie,
   },
 ] as const satisfies DashboardChartContainerSelectItems[];

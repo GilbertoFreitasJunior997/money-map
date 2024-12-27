@@ -43,7 +43,7 @@ const chartItems = [
   {
     dataKey: "transfers",
     name: "Transfers",
-    stroke: "hsl(var(--chart-1))",
+    stroke: "hsl(var(--chart-5))",
   },
 ];
 
@@ -120,6 +120,7 @@ export const TransactionsByDateGraphs = ({
       selectedGraph={selectedGraph}
       setSelectedGraph={setSelectedGraph}
       isLoading={isLoading}
+      transactions={transactions}
     >
       {selectedGraph.label === "Area Chart" ? (
         <AreaChart
