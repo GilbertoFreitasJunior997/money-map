@@ -53,7 +53,9 @@ export default async function Page() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button className="hover:scale-105">Get Started</Button>
+                <Link href={"sign-up"}>
+                  <Button className="hover:scale-105">Get Started</Button>
+                </Link>
                 <Button
                   variant="outline"
                   className="hover:scale-105"
