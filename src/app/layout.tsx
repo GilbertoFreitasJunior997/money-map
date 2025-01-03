@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import { metadataConfig } from "@/lib/seo";
 import { PropsWithChildren } from "react";
 
 const geistSans = localFont({
@@ -15,6 +16,8 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 500 600 700 800 900",
 });
+
+export const metadata = metadataConfig;
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
